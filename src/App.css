@@ -36,3 +36,48 @@
     transform: rotate(360deg);
   }
 }
+
+
+.sidebarl {
+  float: left;
+  width: 50%;
+  background-color: red;
+}
+
+.sidebarr {
+  float: right;
+  width: 50%;
+  background-color: blue;
+}
+
+/* make a grid */
+.wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.wrapper > * {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+  /* needed for the floated layout*/
+}
+
+.header {
+  grid-column: 1 / -1;
+  /* needed for the floated layout */
+  clear: both;
+}
+
+
+/* We need to set the widths used on floated items back to auto, and remove the bottom margin as when we have grid we have gaps. */
+@supports (display: grid) {
+  .wrapper > * {
+    width: auto;
+  }
+}
