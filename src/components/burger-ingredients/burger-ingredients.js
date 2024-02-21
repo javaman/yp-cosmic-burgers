@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients.module.css';
+import Types from '../../prop-types';
+import PropTypes from 'prop-types';
 
 
-const BurgerIngredients = ({ items }) => {
+const BurgerIngredients = ({ items, onItemClicked }) => {
     const [current, setCurrent] = React.useState('one')
     var filterBy;
     if (current == 'one') {
@@ -19,7 +21,7 @@ const BurgerIngredients = ({ items }) => {
 
     return (
         <div>
-            <div style={{ display: 'flex' }}>
+            <div className={styles.tabWrap}>
                 <Tab value="one" active={current === 'one'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -30,15 +32,15 @@ const BurgerIngredients = ({ items }) => {
                     Начинки
                 </Tab>
             </div>
-            <div style={{minHeight: 600, maxHeight: 600, overflowY: "scroll"}}> 
+            <div className={styles.scrollWrap}>
                 {
-                    items.length > 0 ? mapItems(items, filterBy) : <></>
+                    items.length > 0 ? mapItems(items, filterBy, onItemClicked) : <></>
                 }
             </div>
         </div>);
 }
 
-const mapItems = (items, filterBy) => {
+const mapItems = (items, filterBy, onItemClicked) => {
     return items.filter(item => item.type == filterBy).reduce((result, value, index, array) => {
         if (index % 2 == 0) {
             result.push(array.slice(index, index + 2));
@@ -46,21 +48,26 @@ const mapItems = (items, filterBy) => {
         return result;
     }, []).map(pair => {
         return (
-            <div className={styles.row}>
+            <div className={styles.row} key={pair[0]._id}>
                 {
-                    pair.length == 2 ? <> {[mapOne(pair[0]), mapOne(pair[1])]} </> : <> {mapOne(pair[0])}</>
+                    pair.length == 2 ? <> {[mapOne(pair[0], onItemClicked), mapOne(pair[1], onItemClicked)]} </> : <> {mapOne(pair[0], onItemClicked)}</>
                 }
             </div>)
     }
     )
 }
 
-const mapOne = (item) => {
+const mapOne = (item, onItemClicked) => {
     return (
-        <div className={styles.column}>
+        <div className={styles.column} onClick={() => onItemClicked(item)} key={item._id} >
             <BurgerIngredientsItem url={item.image} price={item.price} name={item.name} />
         </div>
     )
+}
+
+BurgerIngredients.propTypes = {
+    items: PropTypes.arrayOf(Types.Item),
+    onItemClicked: PropTypes.func.isRequired
 }
 
 

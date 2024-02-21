@@ -1,0 +1,13 @@
+.imgWrap {
+    text-align: center;
+}
+
+.priceWrap {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.nameWrap {
+    text-align: center;
+}

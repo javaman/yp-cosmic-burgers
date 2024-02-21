@@ -11,3 +11,13 @@
     flex-basis: 100%;
     flex: 1;
 }
+
+.tabWrap {
+    display: flex;
+}
+
+.scrollWrap {
+    min-height: 600px;
+    max-height: 600px;
+    overflow-y: scroll;
+}

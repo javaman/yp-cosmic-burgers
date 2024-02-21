@@ -1,3 +1,17 @@
+.listScroll {
+    max-height: 670px;
+    overflow-y: scroll;
+}
+
 ul.c li {
     list-style-image:url('../../images/bullet.svg')
+}
+
+ul.c li:first-child {
+    list-style: none;
+}
+
+
+ul.c li:last-child {
+    list-style: none;
 }

@@ -60,7 +60,7 @@
 }
 
 .wrapper > * {
-  background-color: #444;
+  background-color: rgb(19, 19, 22);
   color: #fff;
   border-radius: 5px;
   padding: 20px;
@@ -72,6 +72,7 @@
   grid-column: 1 / -1;
   /* needed for the floated layout */
   clear: both;
+  padding: 0;
 }
 
 

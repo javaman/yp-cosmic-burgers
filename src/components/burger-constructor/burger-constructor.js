@@ -2,26 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
+import Types from '../../prop-types';
+import PropTypes from 'prop-types';
 
 
-const BurgerConstructor = () => {
-    const [current, setCurrent] = React.useState('one')
+
+const BurgerConstructor = ({ items, submitOrder }) => {
+    console.log(items);
     return (
         <div>
-            <ul className={styles.c}>
-                <li><ConstructorElement /></li>
-                <li><ConstructorElement /></li>
-                <li><ConstructorElement /></li>
-            </ul>
-            <div style={{float: "right", display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <div className={styles.listScroll}>
+                <ul className={styles.c}>
+                    {items.map((i, idx) => (<li key={i._id}><ConstructorElement thumbnail={i.image_mobile} text={i.name} price={i.price} type={idx == 0 ? 'top' : idx == items.length - 1 ? 'bottom' : undefined} /></li>))}
+                </ul>
+            </div>
+            <div style={{ float: "right", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <span className='text text_type_digits-medium mr-2'>610</span>
                 <CurrencyIcon type='primary' />
-                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4'>
+                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4' onClick={submitOrder}>
                     Оформить заказ
-                </Button>       
+                </Button>
             </div>
         </div>
     );
+}
+
+BurgerConstructor.propTypes = {
+    items: PropTypes.arrayOf(Types.Item),
+    submitOrder: PropTypes.func
 }
 
 export default BurgerConstructor;
