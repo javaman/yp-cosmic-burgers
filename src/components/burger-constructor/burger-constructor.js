@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 
 
 const BurgerConstructor = ({ items, submitOrder }) => {
-    console.log(items);
     return (
         <div>
             <div className={styles.listScroll}>
@@ -16,7 +15,7 @@ const BurgerConstructor = ({ items, submitOrder }) => {
                     {items.map((i, idx) => (<li key={i._id}><ConstructorElement thumbnail={i.image_mobile} text={i.name} price={i.price} type={idx == 0 ? 'top' : idx == items.length - 1 ? 'bottom' : undefined} /></li>))}
                 </ul>
             </div>
-            <div style={{ float: "right", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div className={styles.buttonFooter}>
                 <span className='text text_type_digits-medium mr-2'>610</span>
                 <CurrencyIcon type='primary' />
                 <Button htmlType="button" type="primary" size="medium" extraClass='ml-4' onClick={submitOrder}>

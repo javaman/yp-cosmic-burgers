@@ -15,3 +15,10 @@ ul.c li:first-child {
 ul.c li:last-child {
     list-style: none;
 }
+
+.buttonFooter {
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

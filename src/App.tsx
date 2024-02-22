@@ -28,7 +28,7 @@ type Item = {
 function App() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [item, setItem] = React.useState<Item>();
-  const [data, setData] = React.useState<Item[]>([]);
+  const [ingredients, setIngredients] = React.useState<Item[]>([]);
 
   function showItem(i: Item) {
     setItem(i);
@@ -42,8 +42,14 @@ function App() {
 
   React.useEffect(() => {
     fetch(API_URL)
-      .then(response => response.json())
-      .then(response => setData(response.data))
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert("Все пропало!");
+          return {data: []};
+        }
+      }).then(response => setIngredients(response.data))
       .catch(error => alert("Все пропало!"));
   }, []);
 
@@ -51,8 +57,8 @@ function App() {
     <>
       <div className='wrapper'>
         <header className='header'><AppHeader /><h1 className='text text_type_main-large m-8'>Соберите бургер</h1></header>
-        <aside className='sidebarl'><BurgerIngredients items={data} onItemClicked={(item: Item) => showItem(item)} /></aside>
-        <aside className='sidebarr'><BurgerConstructor items={data} submitOrder={() => submitOrder()} /></aside>
+        <aside className='sidebarl'><BurgerIngredients items={ingredients} onItemClicked={(item: Item) => showItem(item)} /></aside>
+        <aside className='sidebarr'><BurgerConstructor items={ingredients} submitOrder={() => submitOrder()} /></aside>
 
       </div>
       {modalOpen &&

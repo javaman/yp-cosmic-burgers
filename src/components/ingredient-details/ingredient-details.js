@@ -1,23 +1,6 @@
 import styles from './ingredient-details.module.css';
-
-function formatNumber(number) {
-    if (number % 10 == 0) {
-        return number / 10;
-    } else {
-        return "" + Math.floor(number / 10) + "." + (number % 10);
-    }
-}
-
-const NutritionFact = ({name, number}) => {
-    return (<div className='m-4'>
-        <div className={styles.row2 + ' text text_type_main-small mb-2'}>
-            {name}
-        </div>
-        <div className={styles.row2 + ' text text_type_digits-default'}>
-            {formatNumber(number)}
-        </div>
-    </div>);
-}
+import Types from '../../prop-types';
+import NutritionFact from '../nutrition-fact/nutrition-fact';
 
 const IngredientDetails = ({ingredient}) => {
     return (
@@ -32,6 +15,10 @@ const IngredientDetails = ({ingredient}) => {
             </div>
         </div>
     );
+};
+
+IngredientDetails.propTypes = {
+    ingredient: Types.Item
 };
 
 export default IngredientDetails;
