@@ -1,0 +1,12 @@
+.centered {
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+
+.imgCentered {
+    margin: auto;
+    display: block;
+    height: 160px;
+    width: auto;
+}
