@@ -1,6 +1,7 @@
 .listScroll {
     max-height: 670px;
     overflow-y: scroll;
+    min-height: 100px;
 }
 
 ul.c li {

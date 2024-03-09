@@ -1,29 +1,30 @@
 import React from 'react'; 
-import ReactDOM from 'react-dom';
 import {CurrencyIcon}  from '@ya.praktikum/react-developer-burger-ui-components'
-import Types from '../../prop-types';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients-item.module.css'
+import { useDrag } from 'react-dnd';
 
-const BurgerIngredientsItem = ({url, price, name}) => {
+const BurgerIngredientsItem = ({item}) => {
+    const [{isDrag}, dragRef] = useDrag({
+        type: "item",
+        item: item,
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
+
     return (
-        <div>
+        !isDrag && <div ref={dragRef}>
             <div className={styles.imgWrap}>
-                <img src={url} />
+                <img src={item.image} />
             </div>
             <div className={styles.priceWrap}>
-                <span className='text text_type_digits-default'>{price}</span><CurrencyIcon type="primary" />
+                <span className='text text_type_digits-default'>{item.price}</span><CurrencyIcon type="primary" />
             </div>
             <div className={styles.nameWrap + ' text text_type_main-small'}>
-                {name}
+                {item.name}
             </div>
         </div>);
 }
 
-BurgerIngredientsItem.propTypes = {
-    url: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-}
 
 export default BurgerIngredientsItem;
