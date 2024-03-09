@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import bullet from '../../images/od.png';
-import BurgerConstructorContext from '../../services/burger-constructor-context';
+import { useSelector } from 'react-redux';
 
 
 const OrderDetails = () => {
-    const {orderNumber} = React.useContext(BurgerConstructorContext);
+    const {orderNumber} = useSelector( store => store.order );
     return (
         <div>
             <div className={styles.centered + ' text text_type_digits-large mt-8'}>{orderNumber}</div>

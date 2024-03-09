@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import BurgerIngredientsRow from '../burger-ingredients-row/burger-ingredients-row';
 
 
-const BurgerIngredients = ({ items, onItemClicked }) => {
+const BurgerIngredients = ({ items }) => {
 
     const anchors = {
         bun: React.createRef(),
@@ -53,15 +53,15 @@ const BurgerIngredients = ({ items, onItemClicked }) => {
             </div>
             <div className={styles.scrollWrap}>
                 <ul className={styles.list}>
-                    {bunGroup.length > 0 && renderGroup(bunGroup, onItemClicked, anchors.bun)}
-                    {sauceGroup.length > 0 && renderGroup(sauceGroup, onItemClicked, anchors.sauce)}
-                    {mainGroup.length > 0 && renderGroup(mainGroup, onItemClicked, anchors.main)}
+                    {bunGroup.length > 0 && renderGroup(bunGroup, anchors.bun)}
+                    {sauceGroup.length > 0 && renderGroup(sauceGroup, anchors.sauce)}
+                    {mainGroup.length > 0 && renderGroup(mainGroup, anchors.main)}
                 </ul>
             </div>
         </div>);
 }
 
-const renderGroup = (group, onItemClicked, anchor) => {
+const renderGroup = (group, anchor) => {
     return group.reduce((result, value, index, array) => {
         if (index % 2 === 0) {
             result.push(array.slice(index, index + 2));
@@ -70,8 +70,7 @@ const renderGroup = (group, onItemClicked, anchor) => {
     }, []).map((pair, index) => {
         const attributes = { className: styles.row, key: pair[0]._id };
         const rowAttributes = {
-            firstItem: pair[0],
-            onItemClicked: onItemClicked
+            firstItem: pair[0]
         }
         if (pair.length > 1) {
             rowAttributes.secondItem = pair[1];
@@ -84,8 +83,7 @@ const renderGroup = (group, onItemClicked, anchor) => {
 }
 
 BurgerIngredients.propTypes = {
-    items: PropTypes.arrayOf(Types.Item),
-    onItemClicked: PropTypes.func.isRequired
+    items: PropTypes.arrayOf(Types.Item)
 }
 
 

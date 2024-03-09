@@ -1,8 +1,10 @@
 import styles from './ingredient-details.module.css';
-import Types from '../../prop-types';
 import NutritionFact from '../nutrition-fact/nutrition-fact';
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = ({ingredient}) => {
+const IngredientDetails = () => {
+    const {ingredient} = useSelector(store => store.modals);
+
     return (
         <div>
             <div className={styles.row + "m-4"}><img src={ingredient.image_large} className={styles.img}/></div>
@@ -15,10 +17,6 @@ const IngredientDetails = ({ingredient}) => {
             </div>
         </div>
     );
-};
-
-IngredientDetails.propTypes = {
-    ingredient: Types.Item
 };
 
 export default IngredientDetails;

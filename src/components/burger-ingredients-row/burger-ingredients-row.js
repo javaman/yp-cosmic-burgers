@@ -2,16 +2,21 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import styles from './burger-ingredients-row.module.css';
 import Types from '../../prop-types';
 import PropTypes from 'prop-types';
+import { showIngredient } from "../../services/modals";
+import { useDispatch } from "react-redux";
 
-const BurgerIngredientsRow = ({firstItem, secondItem, onItemClicked}) => {
+const BurgerIngredientsRow = ({firstItem, secondItem}) => {
+
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.row}>
-            <div className={styles.column} onClick={() => onItemClicked(firstItem)}>
-                <BurgerIngredientsItem url={firstItem.image} price={firstItem.price} name={firstItem.name} />
+            <div className={styles.column} onClick={() => dispatch(showIngredient(firstItem))}>
+                <BurgerIngredientsItem item={firstItem} />
             </div>
             {secondItem && 
-                <div className={styles.column} onClick={() => onItemClicked(secondItem)}>
-                    <BurgerIngredientsItem url={secondItem.image} price={secondItem.price} name={secondItem.name} />
+                <div className={styles.column} onClick={() => dispatch(showIngredient(firstItem))}>
+                    <BurgerIngredientsItem item={secondItem} />
                 </div>
             }
         </div>
@@ -20,8 +25,7 @@ const BurgerIngredientsRow = ({firstItem, secondItem, onItemClicked}) => {
 
 BurgerIngredientsRow.propTypes = {
     firstItem: Types.Item.isRequired,
-    secondItem: Types.Item,
-    onItemClicked: PropTypes.func.isRequired
+    secondItem: Types.Item
 }
 
 export default BurgerIngredientsRow;
