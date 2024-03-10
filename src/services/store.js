@@ -1,8 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit'
 import ingredientsSlice from './ingredients';
-import burgerConstructorSlice from './burger-constructor';
+import burgerConstructorSlice, { drop } from './burger-constructor';
 import orderSlice from './order';
 import modalsSlice from './modals';
+import { increment, decrement } from './ingredients';
+
+
 
 export const store = configureStore({
     reducer: {
@@ -11,5 +14,6 @@ export const store = configureStore({
         order: orderSlice,
         modals: modalsSlice
     },
-    devTools: process.env.NODE_ENV !== 'production'
+    devTools: process.env.NODE_ENV !== 'production',
 });
+

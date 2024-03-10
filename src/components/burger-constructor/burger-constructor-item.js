@@ -38,9 +38,9 @@ const BurgerConstructorItem = ({index}) => {
     }
 
     return (index == -1)
-        ?  <li><ConstructorElement thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='top' handleClose={e => dispatch(deleteBun())} /></li>
+        ?  <li><ConstructorElement thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='top' /></li>
         :  (index == Number.MAX_SAFE_INTEGER)
-        ?  <li><ConstructorElement  thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='bottom' handleClose={ e => dispatch(deleteBun()) }  /></li>
+        ?  <li><ConstructorElement  thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='bottom' /></li>
         :  <li ref={dragRef} style={extraStyle}><div ref={dropTarget} style={extraOverStyle}><ConstructorElement  thumbnail={items[index].image_mobile} text={items[index].name} price={items[index].price} handleClose={e => dispatch(deleteItem(index))} /></div></li>
 
 };
