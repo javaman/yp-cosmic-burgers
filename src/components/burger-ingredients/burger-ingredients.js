@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients.module.css';
@@ -25,7 +25,7 @@ const BurgerIngredients = ({ items }) => {
             ? 'sauce'
             : mainGroup.length > 0
                 ? 'main'
-                : 'does not matter'
+                : 'does not matter';
 
     const [current, setCurrent] = React.useState(initialTabState);
 
@@ -37,6 +37,8 @@ const BurgerIngredients = ({ items }) => {
         setCurrent(value);
         anchors[value].current.scrollIntoView({ behavior: 'smooth' });
     }
+
+    const scroll = React.createRef();
 
     return (
         <div>
@@ -51,7 +53,12 @@ const BurgerIngredients = ({ items }) => {
                     Начинки
                 </Tab>}
             </div>
-            <div className={styles.scrollWrap}>
+            <div className={styles.scrollWrap} ref={scroll} onScroll={e =>{
+                const offset1 = anchors.bun.current.offsetTop - scroll.current.scrollTop;
+                const offset2 = anchors.sauce.current.offsetTop - scroll.current.scrollTop;
+                const offset3 = anchors.main.current.offsetTop - scroll.current.scrollTop;
+                setCurrent(offset3 < 10 ? 'main' : offset2 < 10 ? 'sauce' : 'bun');
+            }}>
                 <ul className={styles.list}>
                     {bunGroup.length > 0 && renderGroup(bunGroup, anchors.bun)}
                     {sauceGroup.length > 0 && renderGroup(sauceGroup, anchors.sauce)}

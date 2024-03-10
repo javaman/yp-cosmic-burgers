@@ -1,7 +1,8 @@
-import React from 'react'; 
+import React, { useMemo } from 'react'; 
 import {CurrencyIcon}  from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients-item.module.css'
 import { useDrag } from 'react-dnd';
+import { useSelector } from 'react-redux';
 
 const BurgerIngredientsItem = ({item}) => {
     const [{isDrag}, dragRef] = useDrag({
@@ -12,8 +13,18 @@ const BurgerIngredientsItem = ({item}) => {
         })
     });
 
+    const { items, bun } = useSelector((state) => state.burgerConstructor);
+
+    const count = useMemo(() => {
+        if (item.type === 'bun') {
+            return bun ? item._id == bun._id ? 2 : 0 : 0; 
+        } else {
+            return items.filter(i => i._id === item._id).length;
+        }
+    }, [items, bun]);
+
     return (
-        !isDrag && <div ref={dragRef}>
+        !isDrag && <div ref={dragRef} className={`${styles.relative} mb-8`}>
             <div className={styles.imgWrap}>
                 <img src={item.image} />
             </div>
@@ -23,6 +34,10 @@ const BurgerIngredientsItem = ({item}) => {
             <div className={styles.nameWrap + ' text text_type_main-small'}>
                 {item.name}
             </div>
+            { count > 0 &&
+            <div className={`${styles.count}  text text_type_digits-default`}>
+                {count}
+            </div>}
         </div>);
 }
 

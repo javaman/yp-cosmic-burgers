@@ -19,11 +19,11 @@ export const fetchIngredients = createAsyncThunk(
     },
 );
 
-
 const ingredientsSlice = createSlice({
     name: 'items',
     initialState,
-    reducers: {},
+    reducers: {
+    },
     extraReducers: (builder) => {
 
         builder.addCase(fetchIngredients.pending, (state) => {
@@ -40,6 +40,7 @@ const ingredientsSlice = createSlice({
             state.loading = false;
             state.loadingFailed = true;
         });
+
     }
 });
 
