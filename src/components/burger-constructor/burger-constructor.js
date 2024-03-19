@@ -1,52 +1,54 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useMemo } from 'react';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './burger-constructor.module.css'
-import Types from '../../prop-types';
-import PropTypes from 'prop-types';
-import BurgerConstructorContext from '../../services/burger-constructor-context';
+import styles from './burger-constructor.module.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { drop } from '../../services/burger-constructor';
+import { submitOrder } from '../../services/order';
+import BurgerConstructorItem from './burger-constructor-item';
 
-const BurgerConstructor = ({ submitOrder }) => {
-    const {bun, items} = React.useContext(BurgerConstructorContext);
 
-    function computeTotal() {
-        return {total: bun.price * 2 + items.map(i => i.price).reduce((a, b) => a + b, 0)};
+const BurgerConstructor = () => {
+    const {bun, items} = useSelector((store) => store.burgerConstructor);
+    const dispatch = useDispatch();
+
+    const [{isHover}, dropTarget] = useDrop({
+        accept: "item",
+        drop(item) {
+            dispatch(drop(item));
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
+    const total = useMemo(() => {
+        return (bun ? bun.price * 2 : 0) + items.map(i => i.price).reduce((a, b) => a + b, 0);
+    }, [items, bun]);
+
+    const extraClass = {};
+    if (isHover) {
+        extraClass.border = "solid";
     }
-
-    function computeTotalReducer(state, action) {
-        return computeTotal();
-    }
-
-    const [total, dispatchTotal] = React.useReducer(computeTotalReducer, {total: 0}, computeTotal);
-
-    // Простите! Я только учусь.
-    React.useEffect(() => {
-        dispatchTotal();
-    }, [bun, items]);
-
 
     return (
-        <div>
+        <div ref={dropTarget} style={extraClass} >
             <div className={styles.listScroll}>
                 <ul className={styles.c}>
-                    <li><ConstructorElement thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='top' /></li>
-                    {items.map((i, idx) => (<li key={i._id}><ConstructorElement thumbnail={i.image_mobile} text={i.name} price={i.price} type={idx == 0 ? 'top' : idx == items.length - 1 ? 'bottom' : undefined} /></li>))}
-                    <li><ConstructorElement thumbnail={bun.image_mobile} text={bun.name} price={bun.price} type='bottom' /></li>
+                    {bun && <BurgerConstructorItem key={-1} index={-1} />}
+                    {items.map((i, idx) => (<BurgerConstructorItem key={idx} index={idx} />))}
+                    {bun && <BurgerConstructorItem key={Number.MAX_SAFE_INTEGER} index={Number.MAX_SAFE_INTEGER} />}
                 </ul>
             </div>
             <div className={styles.buttonFooter}>
-                <span className='text text_type_digits-medium mr-2'>{total.total}</span>
+                <span className='text text_type_digits-medium mr-2'>{total}</span>
                 <CurrencyIcon type='primary' />
-                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4' onClick={submitOrder}>
+                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4' onClick={() => dispatch(submitOrder({bun, items}))}>
                     Оформить заказ
                 </Button>
             </div>
         </div>
     );
-}
-
-BurgerConstructor.propTypes = {
-    submitOrder: PropTypes.func
 }
 
 export default BurgerConstructor;

@@ -1,29 +1,45 @@
-import React from 'react'; 
-import ReactDOM from 'react-dom';
+import React, { useMemo } from 'react'; 
 import {CurrencyIcon}  from '@ya.praktikum/react-developer-burger-ui-components'
-import Types from '../../prop-types';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredients-item.module.css'
+import { useDrag } from 'react-dnd';
+import { useSelector } from 'react-redux';
 
-const BurgerIngredientsItem = ({url, price, name}) => {
+const BurgerIngredientsItem = ({item}) => {
+    const [{isDrag}, dragRef] = useDrag({
+        type: "item",
+        item: item,
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
+
+    const { items, bun } = useSelector((state) => state.burgerConstructor);
+
+    const count = useMemo(() => {
+        if (item.type === 'bun') {
+            return bun ? item._id == bun._id ? 2 : 0 : 0; 
+        } else {
+            return items.filter(i => i._id === item._id).length;
+        }
+    }, [items, bun]);
+
     return (
-        <div>
+        !isDrag && <div ref={dragRef} className={`${styles.relative} mb-8`}>
             <div className={styles.imgWrap}>
-                <img src={url} />
+                <img src={item.image} />
             </div>
             <div className={styles.priceWrap}>
-                <span className='text text_type_digits-default'>{price}</span><CurrencyIcon type="primary" />
+                <span className='text text_type_digits-default'>{item.price}</span><CurrencyIcon type="primary" />
             </div>
             <div className={styles.nameWrap + ' text text_type_main-small'}>
-                {name}
+                {item.name}
             </div>
+            { count > 0 &&
+            <div className={`${styles.count}  text text_type_digits-default`}>
+                {count}
+            </div>}
         </div>);
 }
 
-BurgerIngredientsItem.propTypes = {
-    url: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-}
 
 export default BurgerIngredientsItem;
