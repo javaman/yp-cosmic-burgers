@@ -5,16 +5,17 @@ import PropTypes from 'prop-types';
 import { showIngredient } from "../../services/modals";
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BurgerIngredientsRow = ({firstItem, secondItem}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const itemClicked = useCallback((item) => {
         dispatch(showIngredient(firstItem));
-        navigate("/ingredients/" + item._id);
+        navigate("/ingredients/" + item._id, {state: {background: location, id: item._id}});
     }, [firstItem, secondItem]);
 
     return (

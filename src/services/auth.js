@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+import { BASE_UR, BASE_URL } from '../constants';
 
 
 const initialState = {
@@ -22,13 +23,15 @@ const initialState = {
     loginError: "",
 
     email: '',
-    name: ''
+    name: '',
+
+    restoreStep: ''
 }
 
 export const requestResetToken = createAsyncThunk(
     'token/request',
     async (action, thunkApi) => {
-        const res = await fetch("https://norma.nomoreparties.space/api/password-reset", {
+        const res = await fetch(BASE_URL + "/password-reset", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -48,7 +51,7 @@ export const requestResetToken = createAsyncThunk(
 export const sendNewPassword = createAsyncThunk(
     'password/new',
     async (action, thunkApi) => {
-        const res = await fetch("https://norma.nomoreparties.space/api/password-reset/reset", {
+        const res = await fetch(BASE_URL + "/password-reset/reset", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -72,7 +75,7 @@ export const register = createAsyncThunk(
         const name = thunkApi.getState().auth.registerLogin;
         const email = thunkApi.getState().auth.registerEmail;
         const password = thunkApi.getState().auth.registerPassword;
-        const res = await fetch("https://norma.nomoreparties.space/api/auth/register", {
+        const res = await fetch(BASE_URL + "/auth/register", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -96,7 +99,7 @@ export const login = createAsyncThunk(
     async(action, thunkApi) => {
         const email = thunkApi.getState().auth.loginEmail;
         const password = thunkApi.getState().auth.loginPassword;
-        const res = await fetch("https://norma.nomoreparties.space/api/auth/login", {
+        const res = await fetch(BASE_URL + "/auth/login", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -122,7 +125,7 @@ export const logout = createAsyncThunk(
     "user/logout",
     async(action, thunkApi) => {
         const token = localStorage.getItem("refresh-token");
-        const res = await fetch("https://norma.nomoreparties.space/api/auth/logout", {
+        const res = await fetch(BASE_URL + "/auth/logout", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -148,7 +151,7 @@ export const logout = createAsyncThunk(
 export const getProfile = createAsyncThunk(
     "user/getProfile",
     async(action, thunkApi) => {
-        const res = await fetch("https://norma.nomoreparties.space/api/auth/user", {
+        const res = await fetch(BASE_URL + "/auth/user", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -169,7 +172,7 @@ export const getProfile = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
     "user/updateProfile",
     async(action, thunkApi) => {
-        const res = await fetch("https://norma.nomoreparties.space/api/auth/user", {
+        const res = await fetch(BASE_URL + "/auth/user", {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -240,6 +243,9 @@ const authSlice = createSlice({
         },
         setName(state, { payload }) {
             state.name = payload;
+        },
+        setRestoreStep(state, { payload }) {
+            state.restoreStep = payload;
         }
     },
     extraReducers: (builder) => {
@@ -264,6 +270,7 @@ const authSlice = createSlice({
             state.loginState = "ok";
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            state.restoreStep = '';
         });
 
         builder.addCase(login.rejected, (state, action) => {
@@ -280,5 +287,6 @@ const authSlice = createSlice({
 
 
 
-export const { setResetEmail, setNewPassword, setNewPasswordToken, setRegisterEmail, setRegisterPassword, setRegisterLogin, setLoginEmail, setLoginPassword, setLoginState, setName, setEmail } = authSlice.actions;
+export const { setRestoreStep, setResetEmail, setNewPassword, setNewPasswordToken, setRegisterEmail, setRegisterPassword, 
+               setRegisterLogin, setLoginEmail, setLoginPassword, setLoginState, setName, setEmail } = authSlice.actions;
 export default authSlice.reducer;

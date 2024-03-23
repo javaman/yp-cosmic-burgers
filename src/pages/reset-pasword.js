@@ -1,20 +1,25 @@
 import styles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendNewPassword, setNewPassword, setNewPasswordToken } from "../services/auth";
 import { useEffect } from "react";
 
-const ResetPassword = () => {
+const ResetPassword = ({ extraClass }) => {
 
-    const { newPassword, newPasswordToken } = useSelector((store) => store.auth);
+    const { newPassword, newPasswordToken, restoreStep } = useSelector((store) => store.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     function restoreButtonClicked(e) {
         dispatch(sendNewPassword());  
     }
 
     useEffect(() => {
+        if (restoreStep !== 'token-sent') {
+            navigate("/forgot-password");
+        }
         return () => {
             dispatch(setNewPassword(''));
             dispatch(setNewPasswordToken(''));
@@ -24,7 +29,7 @@ const ResetPassword = () => {
     
 
     return (
-        <section className={`content ${styles.form}`}>
+        <section className={`${extraClass} ${styles.form}`}>
             <div>
                 <div className={`${styles.center} text text_type_main-medium mb-8`}>Восстановление пароля</div>
                 <div className="m-4"><Input type="password" icon="ShowIcon" placeholder={newPassword ? '' : 'Введите новый пароль'} onChange={e => dispatch(setNewPassword(e.target.value))} value={newPassword} /></div>

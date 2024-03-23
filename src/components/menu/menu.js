@@ -3,9 +3,9 @@ import styles from './menu.module.css';
 import { logout } from "../../services/auth";
 import { useDispatch } from "react-redux";
 
-const Menu = ({ hint, children }) => {
+const Menu = ({ hint, children, extraClass }) => {
 
-    const d = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     function className(state) {
@@ -18,12 +18,12 @@ const Menu = ({ hint, children }) => {
 
     function logoutButtonClicked(e) {
         e.preventDefault();
-        d(logout());
+        dispatch(logout());
         navigate("/");
     }
     
     return (
-        <section className={`content ${styles.container}`}>
+        <section className={`${extraClass} ${styles.container}`}>
             <section className={`${styles.menu} m-15`}>
                 <ul className={styles.list}>
                     <li className="m-4"><NavLink to="/profile" className={className} end>Профиль</NavLink></li>

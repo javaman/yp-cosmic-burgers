@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register, setRegisterEmail, setRegisterLogin, setRegisterPassword } from "../services/auth";
 
-const Register = () => {
+const Register = ( { extraClass } ) => {
     const { registerEmail, registerLogin, registerPassword } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Register = () => {
         navigate("/login");
     }
     return (
-        <section className={`content ${styles.form}`}>
+        <section className={`${extraClass} ${styles.form}`}>
             <div>
                 <div className={`${styles.center} text text_type_main-medium mb-8`}>Регистрация</div>
                 <div className="m-4">

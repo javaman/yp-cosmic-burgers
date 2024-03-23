@@ -9,12 +9,12 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 
-const Ingredient = () => {
+const Ingredient = ({ extraClass }) => {
     const { id } = useParams();
     const { ingredients } = useSelector(store => store.ingredients);
     const item = ingredients.find(element => element._id === id);
     return (
-        <section className={`content ${styles.form}`}>            
+        <section className={`${extraClass} ${styles.form}`}>            
             <div>
                 <div className={`${styles.center} text text_type_main-medium`}>Детали ингредиента</div>
                 <div><IngredientDetails ingredient={item}/></div>

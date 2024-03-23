@@ -10,21 +10,15 @@ import { ResetPassword } from './reset-pasword';
 
 
 
-function Index(props) {
-    const { ingredients } = props;
+function Index({ extraClass }) {
     return (
-        <main className={`content ${styles.content}`}>
+        <main className={`${extraClass} ${styles.content}`}>
             <header className={styles.sheader}>
                 <h1 className='text text_type_main-large m-8'>Соберите бургер</h1>
             </header>
             <DndProvider backend={HTML5Backend}>
-
-
-                <section className={styles.ingredients}><BurgerIngredients items={ingredients} /></section>
+                <section className={styles.ingredients}><BurgerIngredients /></section>
                 <section className={styles.constructor}><BurgerConstructor /></section>
-
-
-
             </DndProvider>
         </main>
     );

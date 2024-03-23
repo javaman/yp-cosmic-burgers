@@ -9,20 +9,25 @@ import { updateProfile } from "../services/auth";
 
 const Profile = () => {
 
-    const d = useDispatch();
+    const dispatch = useDispatch();
     const { email, name } = useSelector(state => state.auth);
 
     useEffect(() => {
-        d(getProfile());
+        dispatch(getProfile());
     }, []);
 
+    function submit(e) {
+        e.preventDefault();
+        dispatch(updateProfile());
+    }
+
     return (
-        <div>
-            <Input placeholder="Имя" type="text" extraClass="m-8" icon="EditIcon" value={name} onChange={e => d(setName(e.target.value))} autoFocus />
-            <Input placeholder="Логин" type="text" extraClass="m-8" icon="EditIcon" value={email} onChange={e => d(setEmail(e.target.value))} />
+        <form onSubmit={submit}>
+            <Input placeholder="Имя" type="text" extraClass="m-8" icon="EditIcon" value={name} onChange={e => dispatch(setName(e.target.value))} autoFocus />
+            <Input placeholder="Логин" type="text" extraClass="m-8" icon="EditIcon" value={email} onChange={e => dispatch(setEmail(e.target.value))} />
             <Input placeholder="Пароль" type="password" extraClass="m-8" icon="EditIcon" readOnly value="cannotchangepasswordhere"/>
-            <div style={{textAlign: "center"}}><Button htmlType="button" type="primary" size="small" onClick={e => d(updateProfile())}>Сохранить</Button></div>
-        </div>
+            <div style={{textAlign: "center"}}><Button htmlType="submit" type="primary" size="small">Сохранить</Button></div>
+        </form>
     );
 
 
