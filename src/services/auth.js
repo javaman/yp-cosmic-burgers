@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { BASE_UR, BASE_URL } from '../constants';
+import { BASE_URL } from '../constants';
+import { checkResponse } from '../utils/networking';
 
 
 const initialState = {
@@ -40,10 +41,7 @@ export const requestResetToken = createAsyncThunk(
             body: JSON.stringify({
                 email: thunkApi.getState().auth.resetEmail
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                return response.ok ? json : Promise.reject(json);
-        })});
+        }).then(checkResponse);
         return res;
     },
 );
@@ -61,10 +59,7 @@ export const sendNewPassword = createAsyncThunk(
                 password: thunkApi.getState().auth.newPassword,
                 token: thunkApi.getState().auth.newPasswordToken
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                return response.ok ? json : Promise.reject(json);
-        })});
+        }).then(checkResponse);
         return res;
     },
 );
@@ -86,10 +81,7 @@ export const register = createAsyncThunk(
                 password,
                 name
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                return response.ok ? json : Promise.reject(json);
-        })});
+        }).then(checkResponse);
         return res;        
     }
 );
@@ -109,14 +101,7 @@ export const login = createAsyncThunk(
                 email,
                 password
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                if (response.ok && json.success) {
-                    return json;
-                } else {
-                    return Promise.reject(json);
-                }
-        })});
+        }).then(checkResponse);
         return res;        
     }
 );
@@ -134,14 +119,7 @@ export const logout = createAsyncThunk(
             body: JSON.stringify({
                 token
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                if (response.ok && json.success) {
-                    return json;
-                } else {
-                    return Promise.reject(json);
-                }
-        })});
+        }).then(checkResponse);
         localStorage.removeItem("refresh-token");
         Cookies.set("access-token", "");
         return res;        
@@ -157,14 +135,7 @@ export const getProfile = createAsyncThunk(
                 'Accept': 'application/json',
                 'Authorization': Cookies.get('access-token')
             }                   
-        }).then(response => {
-            return response.json().then(json => {
-                if (response.ok && json.success) {
-                    return json;
-                } else {
-                    return Promise.reject(json);
-                }
-        })});
+        }).then(checkResponse);
         return res;        
     }
 );
@@ -183,14 +154,7 @@ export const updateProfile = createAsyncThunk(
                 name: thunkApi.getState().auth.name,
                 email: thunkApi.getState().auth.email,
             })        
-        }).then(response => {
-            return response.json().then(json => {
-                if (response.ok && json.success) {
-                    return json;
-                } else {
-                    return Promise.reject(json);
-                }
-        })});
+        }).then(checkResponse);
         return res;        
     }
 );

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URL } from '../constants';
+import { checkResponse } from '../utils/networking';
 
 const initialState = {
     ingredients: [],
@@ -11,11 +12,7 @@ const initialState = {
 export const fetchIngredients = createAsyncThunk(
     'ingredients/getIngredients',
     async (thunkApi) => {
-        const res = await fetch(API_URL).then(response => {
-            return response.json().then(json => {
-                return response.ok ? json : Promise.reject(json);
-        })});
-        return res;
+        return await fetch(API_URL).then(checkResponse);
     },
 );
 
