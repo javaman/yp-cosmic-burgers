@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     orderVisible: false,
-    itemVisible: false,
+    itemVisible: "",
     ingredient: {}
 };
 
@@ -16,13 +16,19 @@ const modalsSlice = createSlice({
         },
         closeModal(state) {
             state.orderVisible = false;
-            state.itemVisible = false;
+            state.itemVisible = "";
         },
         showIngredient(state, { payload }) {
-            state.itemVisible = true;
+            state.itemVisible = "open";
             state.ingredient = {...payload}
+        },
+        hideIngredient(state, action) {
+            state.itemVisible = "hidden";
+        },
+        closeIngredient(state, action) {
+            state.itemVisible = "";
         }
     }});
 
-export const { showOrder, closeModal, showIngredient } = modalsSlice.actions;
+export const { showOrder, closeModal, showIngredient, hideIngredient, closeIngredient } = modalsSlice.actions;
 export default modalsSlice.reducer;

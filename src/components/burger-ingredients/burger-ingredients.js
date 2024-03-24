@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients.module.css';
 import Types from '../../prop-types';
 import PropTypes from 'prop-types';
 import BurgerIngredientsRow from '../burger-ingredients-row/burger-ingredients-row';
+import { useSelector } from 'react-redux';
 
+const BurgerIngredients = () => {
 
-const BurgerIngredients = ({ items }) => {
+    const { ingredients } = useSelector(store => store.ingredients);
 
     const anchors = {
         bun: React.createRef(),
@@ -15,9 +16,9 @@ const BurgerIngredients = ({ items }) => {
         main: React.createRef()
     }
 
-    const bunGroup = items.filter((item) => item.type === "bun");
-    const sauceGroup = items.filter((item) => item.type === "sauce");
-    const mainGroup = items.filter((item) => item.type === "main");
+    const bunGroup = ingredients.filter((item) => item.type === "bun");
+    const sauceGroup = ingredients.filter((item) => item.type === "sauce");
+    const mainGroup = ingredients.filter((item) => item.type === "main");
 
     const initialTabState = bunGroup.length > 0
         ? 'bun'

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SUBMIT_URL } from '../constants';
 import { showOrder } from './modals';
+import { checkResponse } from '../utils/networking';
 
 const initialState = {
     orderNumber: -1,
@@ -25,11 +26,7 @@ export const submitOrder = createAsyncThunk(
             body: JSON.stringify({
                 ingredients: items
             })
-        }).then(response => {
-            return response.json().then(json => {
-                return response.ok ? json : Promise.reject(json);
-            })
-        });
+        }).then(checkResponse);
         tunkApi.dispatch(showOrder());
         return res;
     },

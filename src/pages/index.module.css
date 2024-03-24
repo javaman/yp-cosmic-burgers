@@ -1,0 +1,13 @@
+.content {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: min-content 100%; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "sheader sheader"
+      "ingredients constructor"; 
+    grid-area: content; 
+  }
+  .sheader { grid-area: sheader; }
+  .ingredients { grid-area: ingredients; }
+  .constructor { grid-area: constructor; }

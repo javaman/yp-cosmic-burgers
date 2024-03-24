@@ -1,18 +1,37 @@
-import React from 'react'; 
-import ReactDOM from 'react-dom';
 import { BurgerIcon, ListIcon, ProfileIcon, Logo  } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css'
+import { NavLink } from 'react-router-dom';
 
-const AppHeader = () => {
-    return <div className={styles.header}>
-            <a href="#" className='ml-8 mt-8 mb-8'><BurgerIcon type="primary"/></a>
-            <a href="#" className='text text_type_main-default m-4'>Конструктор</a>
-            <ListIcon type="primary" />
-            <a href="#" className='text text_type_main-default ml-4 mt-4 mb-4'>Лента заказов</a>
-            <a href="#" className={styles.logo}><Logo /></a>
-            <a href="#" className='ml-8'><ProfileIcon type="primary" /></a>
-            <a href="#" className='text text_type_main-default mr-8 ml-4'>Личный кабинет</a>
-    </div>
+const AppHeader = ({ extraClass }) => {
+
+    function class4Text({ isActive, isPending, isTransitioning }) {
+        if (isActive) {
+            return "text text_type_main-default m-4";
+        } else {
+            return "text text_type_main-default m-4 text_color_inactive";
+        }
+    };
+
+    function class4Icon({ isActive, isPending, isTransitioning }) {
+        if (isActive) {
+            return `${styles.glow} ml-8 mt-8 mb-8`;
+        } else {
+            return "ml-8 mt-8 mb-8";
+        }
+    }
+
+    return <header className={`${styles.header} ${extraClass}`}>
+            <NavLink to="/" className={class4Icon}><BurgerIcon type="primary"/></NavLink>
+            <NavLink to="/" className={class4Text}>Конструктор</NavLink>
+
+            <NavLink to="#" className="ml-8 mt-8 mb-8"><ListIcon type="primary" /></NavLink>
+            <a href="#" className='text text_type_main-default ml-4 mt-4 mb-4 text_color_inactive'>Лента заказов</a>
+        
+            <NavLink to="/" className={styles.logo}><Logo /></NavLink>
+
+            <NavLink to="/profile" className={class4Icon}><ProfileIcon type="primary" /></NavLink>
+            <NavLink to="/profile" className={class4Text}>Личный кабинет</NavLink>
+    </header>
 }
 
 export default AppHeader;

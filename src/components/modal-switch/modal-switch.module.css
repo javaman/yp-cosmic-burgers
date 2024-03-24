@@ -1,0 +1,15 @@
+.container {  
+    display: grid;
+    grid-template-columns: 1fr 1280px 1fr; 
+    grid-template-rows: min-content 100%;
+    gap: 0px 0px;
+    grid-template-areas:
+      "header header header"
+      ". content .";
+    width: 100%;
+    height: 100%;
+  }
+  
+  .header { grid-area: header; }
+  
+  .content { grid-area: content; }
