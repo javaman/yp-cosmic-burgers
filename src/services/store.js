@@ -3,7 +3,8 @@ import ingredientsSlice from './ingredients';
 import burgerConstructorSlice, { drop } from './burger-constructor';
 import orderSlice from './order';
 import modalsSlice from './modals';
-import { increment, decrement } from './ingredients';
+import auth from './auth';
+import { refreshTokenMiddleware } from './auth';
 
 
 
@@ -12,8 +13,10 @@ export const store = configureStore({
         ingredients: ingredientsSlice,
         burgerConstructor: burgerConstructorSlice,
         order: orderSlice,
-        modals: modalsSlice
+        modals: modalsSlice,
+        auth: auth
     },
     devTools: process.env.NODE_ENV !== 'production',
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(refreshTokenMiddleware.middleware)
 });
 
