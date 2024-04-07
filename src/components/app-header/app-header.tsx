@@ -2,9 +2,9 @@ import { BurgerIcon, ListIcon, ProfileIcon, Logo  } from '@ya.praktikum/react-de
 import styles from './app-header.module.css'
 import { NavLink } from 'react-router-dom';
 
-const AppHeader = ({ extraClass }) => {
+const AppHeader = ({ extraClass } : {extraClass: string}) => {
 
-    function class4Text({ isActive, isPending, isTransitioning }) {
+    function class4Text({ isActive } : {isActive: boolean}) {
         if (isActive) {
             return "text text_type_main-default m-4";
         } else {
@@ -12,7 +12,7 @@ const AppHeader = ({ extraClass }) => {
         }
     };
 
-    function class4Icon({ isActive, isPending, isTransitioning }) {
+    function class4Icon({ isActive } : {isActive: boolean}) {
         if (isActive) {
             return `${styles.glow} ml-8 mt-8 mb-8`;
         } else {

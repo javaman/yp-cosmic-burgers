@@ -1,17 +1,12 @@
 import styles from "./ingredient.module.css";
-import { Input, Button, ShowIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useParams } from "react-router-dom";
-import { setLoginEmail, setLoginPassword } from "../services/auth";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "../services/auth";
-import { setLoginState } from "../services/auth";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useSelector  } from "react-redux";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
+import { selectIngredients } from "../services/ingredients";
 
-const Ingredient = ({ extraClass }) => {
+const Ingredient = ({ extraClass } : { extraClass: string }) => {
     const { id } = useParams();
-    const { ingredients } = useSelector(store => store.ingredients);
+    const { ingredients } = useSelector(selectIngredients);
     const item = ingredients.find(element => element._id === id);
     return (
         <section className={`${extraClass} ${styles.form}`}>            

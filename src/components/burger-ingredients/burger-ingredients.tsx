@@ -1,16 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { RefObject, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
-import Types from '../../prop-types';
 import PropTypes from 'prop-types';
-import BurgerIngredientsRow from '../burger-ingredients-row/burger-ingredients-row';
+import BurgerIngredientsRow, { TBurgerIngredientsRowParam } from '../burger-ingredients-row/burger-ingredients-row';
 import { useSelector } from 'react-redux';
+import { selectIngredients } from '../../services/ingredients';
+import TBurgerItem from '../../types/burger-types';
+
+type TAnchors = {
+    bun: RefObject<HTMLLIElement>;
+    sauce: RefObject<HTMLLIElement>;
+    main: RefObject<HTMLLIElement>;
+}
+
+type TAnchor = keyof TAnchors;
 
 const BurgerIngredients = () => {
 
-    const { ingredients } = useSelector(store => store.ingredients);
+    const { ingredients } = useSelector(selectIngredients);
 
-    const anchors = {
+    const anchors: TAnchors = {
         bun: React.createRef(),
         sauce: React.createRef(),
         main: React.createRef()
@@ -34,12 +43,13 @@ const BurgerIngredients = () => {
         setCurrent(initialTabState);
     }, [initialTabState]);
 
-    function tabClicked(value) {
+    function tabClicked(value: string) {
+        const casted = value as TAnchor;
         setCurrent(value);
-        anchors[value].current.scrollIntoView({ behavior: 'smooth' });
+        anchors[casted]?.current?.scrollIntoView({ behavior: 'smooth' });
     }
 
-    const scroll = React.createRef();
+    const scroll = React.createRef<HTMLDivElement>();
 
     return (
         <div>
@@ -55,9 +65,8 @@ const BurgerIngredients = () => {
                 </Tab>}
             </div>
             <div className={styles.scrollWrap} ref={scroll} onScroll={e =>{
-                const offset1 = anchors.bun.current.offsetTop - scroll.current.scrollTop;
-                const offset2 = anchors.sauce.current.offsetTop - scroll.current.scrollTop;
-                const offset3 = anchors.main.current.offsetTop - scroll.current.scrollTop;
+                const offset2 = (anchors.sauce.current?.offsetTop ?? 0) - (scroll.current?.scrollTop ?? 0);
+                const offset3 = (anchors.main.current?.offsetTop ?? 0) - (scroll.current?.scrollTop ?? 0);
                 setCurrent(offset3 < 10 ? 'main' : offset2 < 10 ? 'sauce' : 'bun');
             }}>
                 <ul className={styles.list}>
@@ -69,30 +78,32 @@ const BurgerIngredients = () => {
         </div>);
 }
 
-const renderGroup = (group, anchor) => {
-    return group.reduce((result, value, index, array) => {
+const renderGroup = (group: TBurgerItem[], anchor: RefObject<HTMLLIElement>) => {
+    return group.reduce((result, _, index, array) => {
         if (index % 2 === 0) {
             result.push(array.slice(index, index + 2));
         }
         return result;
-    }, []).map((pair, index) => {
-        const attributes = { className: styles.row, key: pair[0]._id };
-        const rowAttributes = {
+    }, [] as TBurgerItem[][]).map((pair, index) => {
+        type TLiAttributes = React.LiHTMLAttributes<HTMLLIElement> & {
+            key: string;
+            ref?: RefObject<HTMLLIElement>
+        };
+        const attributes: TLiAttributes = { 
+            className: styles.row, 
+            key: pair[0]._id };
+
+        const rowAttributes: TBurgerIngredientsRowParam = {
             firstItem: pair[0]
         }
         if (pair.length > 1) {
             rowAttributes.secondItem = pair[1];
         }
-        if (index == 0) {
+        if (index === 0) {
             attributes.ref = anchor;
         }
         return <li {...attributes}><BurgerIngredientsRow {...rowAttributes}/></li>;
     });
 }
-
-BurgerIngredients.propTypes = {
-    items: PropTypes.arrayOf(Types.Item)
-}
-
 
 export default BurgerIngredients;

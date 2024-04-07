@@ -2,8 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SUBMIT_URL } from '../constants';
 import { showOrder } from './modals';
 import { checkResponse } from '../utils/networking';
+import { TBurgerItemWithUuid } from './burger-constructor';
+import { RootState } from './store';
 
-const initialState = {
+interface IOrderState {
+    orderNumber: number;
+    loading: boolean;
+    loadingFailed: boolean;
+}
+
+const initialState: IOrderState = {
     orderNumber: -1,
     loading: false,
     loadingFailed: false
@@ -11,7 +19,7 @@ const initialState = {
 
 export const submitOrder = createAsyncThunk(
     'order/postOrder',
-    async (action, tunkApi) => {
+    async (action : {bun: TBurgerItemWithUuid, items: TBurgerItemWithUuid[]}, tunkApi) => {
         const items = action.items.map(i => i._id);
         if (action.bun != null) {
             items.push(action.bun._id);
@@ -54,5 +62,7 @@ const orderSlice = createSlice({
         });
     }
 });
+
+export const selectOrder = (state: RootState) => state.order;
 
 export default orderSlice.reducer;

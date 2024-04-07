@@ -1,32 +1,33 @@
 import styles from './ingredient-details.module.css';
 import NutritionFact from '../nutrition-fact/nutrition-fact';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { selectIngredients } from '../../services/ingredients';
+import TBurgerItem from '../../types/burger-types';
 
-const IngredientDetails = (params) => {
+const IngredientDetails = ({ingredient, id} : {ingredient?: TBurgerItem, id?: string}) => {
 
-    let i;
-    const { ingredients } = useSelector( store => store.ingredients);
+    let i: TBurgerItem | undefined;
+    const { ingredients } = useSelector(selectIngredients);
     const navigate = useNavigate();
 
 
-    if (params.ingredient) {
-        i = params.ingredient;
+    if (ingredient !== undefined) {
+        i = ingredient;
     } else {
-        if (!ingredients.length) {
-            i = {};
-        } else {
-            i = ingredients.find(i => i._id === params.id)
-        }
+        i = ingredients.find(it => it._id === id)
     } 
     
     useEffect(() => {
-        if (!ingredients.length && !!params.id) {
-            navigate("/ingredients/" + params.id, {replace: true});
+        if (ingredient !== undefined) {
+            navigate("/ingredients/" + ingredient._id, {replace: true});
         }
     }, []);
 
+    if (i === undefined) {
+        return (<></>);
+    }
 
     return (
         <div>

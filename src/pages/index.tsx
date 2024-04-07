@@ -10,7 +10,7 @@ import { ResetPassword } from './reset-pasword';
 
 
 
-function Index({ extraClass }) {
+function Index({ extraClass } : { extraClass : string}) {
     return (
         <main className={`${extraClass} ${styles.content}`}>
             <header className={styles.sheader}>
@@ -18,7 +18,7 @@ function Index({ extraClass }) {
             </header>
             <DndProvider backend={HTML5Backend}>
                 <section className={styles.ingredients}><BurgerIngredients /></section>
-                <section className={styles.constructor}><BurgerConstructor /></section>
+                <section className={styles.aconstructor}><BurgerConstructor /></section>
             </DndProvider>
         </main>
     );

@@ -1,8 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URL } from '../constants';
 import { checkResponse } from '../utils/networking';
+import { RootState } from './store';
+import TBurgerItem from '../types/burger-types';
 
-const initialState = {
+interface IIngredientsState {
+    ingredients: TBurgerItem[];
+    loading: boolean;
+    loadingFailed: boolean;   
+};
+
+const initialState: IIngredientsState = {
     ingredients: [],
     loading: false,
     loadingFailed: false
@@ -11,7 +19,7 @@ const initialState = {
 
 export const fetchIngredients = createAsyncThunk(
     'ingredients/getIngredients',
-    async (thunkApi) => {
+    async () => {
         return await fetch(API_URL).then(checkResponse);
     },
 );
@@ -38,5 +46,7 @@ const ingredientsSlice = createSlice({
 
     }
 });
+
+export const selectIngredients = (state: RootState) => state.ingredients;
 
 export default ingredientsSlice.reducer;

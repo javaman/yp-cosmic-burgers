@@ -11,18 +11,24 @@ import { Menu } from '../menu/menu';
 import Orders from '../../pages/orders';
 import Protect from '../protect';
 import { Ingredient } from '../../pages/ingredient';
-import { closeModal } from '../../services/modals';
+import { closeModal, selectModals } from '../../services/modals';
 
 export default function ModalSwitch() {
     const location = useLocation();
     let navigate = useNavigate();
     const background = location.state && location.state.background;
     const id = location.state && location.state.id;
+
+    console.log("---");
+    console.log(location);
+
     const dispatcher = useDispatch();
+
     function closeIngredients() {
         navigate(-1);
     };
-    const { orderVisible } = useSelector(store => store.modals);
+    const { orderVisible } = useSelector(selectModals);
+
     return (
         <div className={styles.container}>
             <AppHeader extraClass={styles.header}/>
@@ -38,7 +44,7 @@ export default function ModalSwitch() {
             </Routes>
             { background &&
                                         <Modal closeModal={closeIngredients} title="Детали ингредиента">
-                                            <IngredientDetails  id={id}/>
+                                            <IngredientDetails  id={id} />
                                         </Modal>} 
             { orderVisible && <Modal closeModal={() =>   dispatcher(closeModal())}><OrderDetails /></Modal> }
         </div>

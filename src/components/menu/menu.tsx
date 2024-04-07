@@ -2,21 +2,27 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from './menu.module.css';
 import { logout } from "../../services/auth";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../services/store";
 
-const Menu = ({ hint, children, extraClass }) => {
+export type TMenuProps = {
+    hint? : string;
+    extraClass? : string;
+}
 
-    const dispatch = useDispatch();
+const Menu = ({ hint, children, extraClass } : React.PropsWithChildren<TMenuProps>) => {
+
+    const dispatch = useDispatch.withTypes<AppDispatch>()();
     const navigate = useNavigate();
 
-    function className(state) {
-        if(state.isActive) {
+    function className({isActive} : {isActive: boolean}) {
+        if (isActive) {
             return "text text_type_main-medium";
         } else {
             return "text text_type_main-medium text_color_inactive";
         }
     }
 
-    function logoutButtonClicked(e) {
+    function logoutButtonClicked(e : React.MouseEvent) {
         e.preventDefault();
         dispatch(logout());
         navigate("/");
