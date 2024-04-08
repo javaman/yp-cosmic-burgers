@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-export default function Protect({ element, authorized, to }) {
+export default function Protect({ element, authorized, to } : {authorized: boolean; to: string; element: JSX.Element}) : JSX.Element {
     const navigate = useNavigate();
     const accessToken = Cookies.get("access-token");
     const refreshToken = localStorage.getItem("refresh-token");
@@ -18,6 +18,6 @@ export default function Protect({ element, authorized, to }) {
     if (secure) {
         return element;
     } else {                
-        return <></>;
+        return (<></>);
     }
 }

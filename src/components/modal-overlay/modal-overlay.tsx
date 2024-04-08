@@ -2,9 +2,13 @@ import React from "react";
 import { createPortal } from "react-dom";
 import styles from './modal-overlay.module.css';
 
-const ModalOverlay = ({closeModal, children}) => {
+export type TModalOverlayProps = {
+    closeModal: () => void
+}
 
-    function handleEscape(e) {
+const ModalOverlay = ({closeModal, children} : React.PropsWithChildren<TModalOverlayProps>) => {
+
+    function handleEscape(e : KeyboardEvent) {
         if (e.key === 'Escape') {
             closeModal();
         }

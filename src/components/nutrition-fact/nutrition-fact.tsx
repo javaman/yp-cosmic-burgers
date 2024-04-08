@@ -1,6 +1,6 @@
 import styles from './nutrition-fact-styles.module.css';
 
-function formatNumber(number) {
+function formatNumber(number: number) {
     if (number % 10 == 0) {
         return number / 10;
     } else {
@@ -8,7 +8,7 @@ function formatNumber(number) {
     }
 }
 
-const NutritionFact = ({name, number}) => {
+const NutritionFact = ({name, number} : {name: string; number: number}) => {
     return (<div className='m-4'>
         <div className={styles.row2 + ' text text_type_main-small mb-2'}>
             {name}

@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import TBurgerItem from '../types/burger-types';
+import { RootState } from './store';
 
-const initialState = {
-    bun: null,
+export type TBurgerItemWithUuid = TBurgerItem & {uuid : string};
+
+interface IConstructorState {
+    bun?: TBurgerItemWithUuid;
+    items: (TBurgerItem  & {uuid : string})[];
+};
+
+const initialState: IConstructorState = {
     items: []
 };
 
@@ -10,7 +18,7 @@ const burgerConstructorSlice = createSlice({
     name: 'order-constructor',
     initialState,
     reducers: {
-        drop(state, {payload}) {
+        drop(state, {payload} : {payload: TBurgerItem & {uuid: string}}) {
             if (payload.type === 'bun') {
                 state.bun = {...payload};
             } else {
@@ -18,7 +26,7 @@ const burgerConstructorSlice = createSlice({
             }
         },
         deleteBun(state) {
-            state.bun = null;
+            state.bun = undefined;
         },
         deleteItem(state, {payload}) {
             state.items = state.items.filter((e, i) => i != payload);
@@ -34,3 +42,4 @@ const burgerConstructorSlice = createSlice({
 
 export const { drop, deleteItem, deleteBun, replace } = burgerConstructorSlice.actions;
 export default burgerConstructorSlice.reducer;
+export const selectConstructor = (state: RootState) => state.burgerConstructor;

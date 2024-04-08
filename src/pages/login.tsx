@@ -1,17 +1,18 @@
 import styles from "./login.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { setLoginEmail, setLoginPassword } from "../services/auth";
+import { selectAuth, setLoginEmail, setLoginPassword } from "../services/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../services/auth";
 import { setLoginState } from "../services/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "../services/store";
 
-const Login = ({extraClass}) => {
-    const { loginEmail, loginPassword, loginState, loginError } = useSelector(store => store.auth);
+const Login = ({extraClass} : {extraClass : string}) => {
+    const { loginEmail, loginPassword, loginState, loginError } = useSelector(selectAuth);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch =  useDispatch.withTypes<AppDispatch>()();
 
     useEffect(() => {
         switch (loginState) {
@@ -28,7 +29,7 @@ const Login = ({extraClass}) => {
         dispatch(setLoginState(""));
     }, [loginState, dispatch, navigate, loginError]);
 
-    function submit(e) {
+    function submit(e : React.FormEvent) {
         e.preventDefault();
         dispatch(login());
     }

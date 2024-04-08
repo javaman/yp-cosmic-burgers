@@ -3,20 +3,22 @@ import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-co
 import styles from './burger-constructor.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { drop } from '../../services/burger-constructor';
+import { drop, selectConstructor } from '../../services/burger-constructor';
 import { submitOrder } from '../../services/order';
 import BurgerConstructorItem from './burger-constructor-item';
 import { v4 as uuidv4 } from 'uuid';
 import { isAuthenticated } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../../services/store';
+import TBurgerItem from '../../types/burger-types';
 
 const BurgerConstructor = () => {
-    const {bun, items} = useSelector((store) => store.burgerConstructor);
-    const dispatch = useDispatch();
+    const {bun, items} = useSelector(selectConstructor);
+    const dispatch =  useDispatch.withTypes<AppDispatch>()();
 
     const [{isHover}, dropTarget] = useDrop({
         accept: "item",
-        drop(item) {
+        drop(item: TBurgerItem) {
             dispatch(drop({...item, uuid: uuidv4()}));
         },
         collect: monitor => ({
@@ -28,15 +30,15 @@ const BurgerConstructor = () => {
         return (bun ? bun.price * 2 : 0) + items.map(i => i.price).reduce((a, b) => a + b, 0);
     }, [items, bun]);
 
-    const extraClass = {};
+    const extraClass : React.CSSProperties = {};
     if (isHover) {
         extraClass.border = "solid";
     }
 
     const navigate = useNavigate();
 
-    function orderSubmited(e) {
-        if (total > 0) {
+    function orderSubmited() {
+        if (total > 0 && bun !== undefined) {
             if (isAuthenticated()) {
                 dispatch(submitOrder({bun, items}));
             } else {

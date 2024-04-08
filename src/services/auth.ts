@@ -2,9 +2,27 @@ import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxj
 import Cookies from 'js-cookie';
 import { BASE_URL } from '../constants';
 import { checkResponse } from '../utils/networking';
+import { RootState } from './store';
 
+interface IAuthState {
+    resetEmail: string;
+    newPassword: string;
+    newPasswordToken: string;
+    registerLogin: string;
+    registerEmail: string;
+    registerPassword: string;
+    accessToken?: string;
+    refreshToken: string | null;
+    loginEmail: string;
+    loginPassword: string;
+    loginState: string;
+    loginError: string;
+    email: string;
+    name: string;
+    restoreStep: string;
+};
 
-const initialState = {
+const initialState: IAuthState = {
 
     resetEmail: '',
 
@@ -31,7 +49,8 @@ const initialState = {
 
 export const requestResetToken = createAsyncThunk(
     'token/request',
-    async (action, thunkApi) => {
+    async (_, { getState, dispatch}) => {
+        const { auth } = getState() as { auth: IAuthState}
         const res = await fetch(BASE_URL + "/password-reset", {
             method: 'POST',
             headers: {
@@ -39,7 +58,7 @@ export const requestResetToken = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: thunkApi.getState().auth.resetEmail
+                email: auth.email
             })        
         }).then(checkResponse);
         return res;
@@ -48,7 +67,8 @@ export const requestResetToken = createAsyncThunk(
 
 export const sendNewPassword = createAsyncThunk(
     'password/new',
-    async (action, thunkApi) => {
+    async (_, {getState, dispatch }) => {
+        const { auth } = getState() as { auth: IAuthState};
         const res = await fetch(BASE_URL + "/password-reset/reset", {
             method: 'POST',
             headers: {
@@ -56,8 +76,8 @@ export const sendNewPassword = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                password: thunkApi.getState().auth.newPassword,
-                token: thunkApi.getState().auth.newPasswordToken
+                password: auth.newPassword,
+                token: auth.newPasswordToken
             })        
         }).then(checkResponse);
         return res;
@@ -66,10 +86,11 @@ export const sendNewPassword = createAsyncThunk(
 
 export const register = createAsyncThunk(
     "user/register",
-    async(action, thunkApi) => {
-        const name = thunkApi.getState().auth.registerLogin;
-        const email = thunkApi.getState().auth.registerEmail;
-        const password = thunkApi.getState().auth.registerPassword;
+    async(_, { getState, dispatch }) => {
+        const { auth } = getState() as { auth: IAuthState};
+        const name = auth.registerLogin;
+        const email = auth.registerEmail;
+        const password = auth.registerPassword;
         const res = await fetch(BASE_URL + "/auth/register", {
             method: 'POST',
             headers: {
@@ -88,9 +109,10 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
     "user/login",
-    async(action, thunkApi) => {
-        const email = thunkApi.getState().auth.loginEmail;
-        const password = thunkApi.getState().auth.loginPassword;
+    async(_, { getState, dispatch }) => {
+        const { auth } = getState() as { auth: IAuthState};
+        const email = auth.loginEmail;
+        const password = auth.loginPassword;
         const res = await fetch(BASE_URL + "/auth/login", {
             method: 'POST',
             headers: {
@@ -128,12 +150,12 @@ export const logout = createAsyncThunk(
 
 export const getProfile = createAsyncThunk(
     "user/getProfile",
-    async(action, thunkApi) => {
+    async() => {
         const res = await fetch(BASE_URL + "/auth/user", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': Cookies.get('access-token')
+                'Authorization': Cookies.get('access-token') ?? ''
             }                   
         }).then(checkResponse);
         return res;        
@@ -142,17 +164,18 @@ export const getProfile = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
     "user/updateProfile",
-    async(action, thunkApi) => {
+    async(_, { getState }) => {
+        const { auth } = getState() as { auth: IAuthState};
         const res = await fetch(BASE_URL + "/auth/user", {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': Cookies.get('access-token')
+                'Authorization': Cookies.get('access-token') ?? ''
             },
             body: JSON.stringify({
-                name: thunkApi.getState().auth.name,
-                email: thunkApi.getState().auth.email,
+                name: auth.name,
+                email: auth.email,
             })        
         }).then(checkResponse);
         return res;        
@@ -164,9 +187,10 @@ refreshTokenMiddleware.startListening({
     predicate: (action, currentState, previousState) => {
         return "user/register/fulfilled" === action.type || "user/login/fulfilled" === action.type;
     },
-    effect: async (action, listenerApi) => {
-        localStorage.setItem("refresh-token", listenerApi.getState().auth.refreshToken);
-        Cookies.set('access-token', listenerApi.getState().auth.accessToken, {expires: 1/96});
+    effect: async (action, { getState }) => {
+        const { auth } = getState() as { auth: IAuthState};
+        localStorage.setItem("refresh-token", auth.refreshToken ?? '');
+        Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96});
     }
 });
 
@@ -238,7 +262,7 @@ const authSlice = createSlice({
         });
 
         builder.addCase(login.rejected, (state, action) => {
-            state.loginError = action.error.message;
+            state.loginError = action.error.message ?? "Unknown error";
             state.loginState = "error";
         });
 
@@ -253,4 +277,5 @@ const authSlice = createSlice({
 
 export const { setRestoreStep, setResetEmail, setNewPassword, setNewPasswordToken, setRegisterEmail, setRegisterPassword, 
                setRegisterLogin, setLoginEmail, setLoginPassword, setLoginState, setName, setEmail } = authSlice.actions;
+export const selectAuth = (state: RootState) => state.auth;
 export default authSlice.reducer;

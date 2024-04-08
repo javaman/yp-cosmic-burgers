@@ -1,4 +1,4 @@
-export function checkResponse(res) {
+export function checkResponse(res: Response) {
     return res.json().then(json => {
         if (res.ok && ((json.success === undefined) || json.success)) {
             return json;
