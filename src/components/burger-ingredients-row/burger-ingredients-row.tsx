@@ -21,7 +21,6 @@ const BurgerIngredientsRow = (props : TBurgerIngredientsRowParam) => {
     const itemClicked = useCallback((item: TBurgerItem) => {
         dispatch(showIngredient(item));
         const state = {state: {background: location, id: item._id}};
-        console.log(state);
         navigate("/ingredients/" + item._id, state);
     }, [props.firstItem, location, navigate, dispatch]);
 

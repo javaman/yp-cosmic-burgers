@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { BASE_URL } from '../constants';
+import { BASE_URL, DOMAIN } from '../constants';
 import { checkResponse } from '../utils/networking';
 import { RootState } from './store';
 
@@ -190,7 +190,7 @@ refreshTokenMiddleware.startListening({
     effect: async (action, { getState }) => {
         const { auth } = getState() as { auth: IAuthState};
         localStorage.setItem("refresh-token", auth.refreshToken ?? '');
-        Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96});
+        console.log(Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96}));
     }
 });
 

@@ -24,8 +24,8 @@ const AppHeader = ({ extraClass } : {extraClass: string}) => {
             <NavLink to="/" className={class4Icon}><BurgerIcon type="primary"/></NavLink>
             <NavLink to="/" className={class4Text}>Конструктор</NavLink>
 
-            <NavLink to="#" className="ml-8 mt-8 mb-8"><ListIcon type="primary" /></NavLink>
-            <a href="#" className='text text_type_main-default ml-4 mt-4 mb-4 text_color_inactive'>Лента заказов</a>
+            <NavLink to="/feed" className={class4Icon}><ListIcon type="primary" /></NavLink>
+            <NavLink to="/feed" className={class4Text}>Лента заказов</NavLink>
         
             <NavLink to="/" className={styles.logo}><Logo /></NavLink>
 

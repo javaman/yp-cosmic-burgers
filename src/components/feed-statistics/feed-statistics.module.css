@@ -1,0 +1,56 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 300px auto auto;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "ready progress"
+        "total total"
+        "day day";
+}
+
+.total {
+    grid-area: total;
+}
+
+.day {
+    grid-area: day;
+}
+
+.ready {
+    grid-area: ready;
+}
+
+.progress {
+    grid-area: progress;
+}
+
+ul.hlist {
+    list-style-type: none;
+}
+
+.hlist {
+    width: max-content;
+    position: absolute;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.hlist ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.hlist > li {
+    display: inline-block;
+    color: white;
+}
+
+.horScroll {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    height: 70%;
+}
+

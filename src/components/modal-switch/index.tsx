@@ -12,6 +12,9 @@ import Orders from '../../pages/orders';
 import Protect from '../protect';
 import { Ingredient } from '../../pages/ingredient';
 import { closeModal, selectModals } from '../../services/modals';
+import Feed from '../../pages/feed';
+import { Order } from '../../pages/order';
+import { OrderInfo } from '../order-info/order-info';
 
 export default function ModalSwitch() {
     const location = useLocation();
@@ -19,15 +22,12 @@ export default function ModalSwitch() {
     const background = location.state && location.state.background;
     const id = location.state && location.state.id;
 
-    console.log("---");
-    console.log(location);
-
     const dispatcher = useDispatch();
 
     function closeIngredients() {
         navigate(-1);
     };
-    const { orderVisible } = useSelector(selectModals);
+    const { orderVisible,  orderInfoVisible } = useSelector(selectModals);
 
     return (
         <div className={styles.container}>
@@ -41,8 +41,17 @@ export default function ModalSwitch() {
                 <Route path="/profile" element={ <Protect element={<Menu extraClass={styles.content} hint="В этом разделе вы можете изменить свои персональные данные"><Profile /></Menu>} authorized={true} to="/login" /> }  />
                 <Route path="/profile/orders" element={ <Protect element={<Menu extraClass={styles.content}><Orders /></Menu>} authorized={true} to="/login" /> }  />
                 <Route path="/ingredients/:id" element={ <Ingredient  extraClass={styles.content}/> } />
+                <Route path="/feed" element={ <Feed extraClass={styles.content} /> } />
+                <Route path="/feed/:id" element={ <Order extraClass={styles.content} /> } />
+                <Route path="/profile/orders/:id" element={ <Protect element={<Order extraClass={styles.content} />} authorized={true} to="/login" /> } />
             </Routes>
-            { background &&
+            {
+                background && orderInfoVisible &&
+                    <Modal closeModal={() => { dispatcher(closeModal()); navigate(-1);}}>
+                        <OrderInfo number={Number(id)}/>
+                    </Modal>
+            }
+            { background && !orderInfoVisible && 
                                         <Modal closeModal={closeIngredients} title="Детали ингредиента">
                                             <IngredientDetails  id={id} />
                                         </Modal>} 

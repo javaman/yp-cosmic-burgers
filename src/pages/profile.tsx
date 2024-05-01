@@ -1,5 +1,3 @@
-import { NavLink, useOutlet } from "react-router-dom";
-import styles from './profile.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
 import { getProfile, selectAuth } from "../services/auth";
