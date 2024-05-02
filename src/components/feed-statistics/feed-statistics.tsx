@@ -8,14 +8,14 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
     let reversedOrders = [...orders].sort((a, b) => a.number - b.number).reverse();
 
     for (const order of reversedOrders) {
-        if (order.status == "done") {
-            if (readyParts[readyParts.length - 1].length == 5) {
+        if (order.status === "done") {
+            if (readyParts[readyParts.length - 1].length === 5) {
                 readyParts.push([]);
             }
             const destination = readyParts[readyParts.length - 1];
             destination.push({ ...order });
         } else {
-            if (notReadyParts[notReadyParts.length - 1].length == 5) {
+            if (notReadyParts[notReadyParts.length - 1].length === 5) {
                 notReadyParts.push([]);
             }
             const destination = notReadyParts[notReadyParts.length - 1];
@@ -24,11 +24,11 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
     }
 
 
-    if (readyParts[readyParts.length - 1].length == 0) {
+    if (readyParts[readyParts.length - 1].length === 0) {
         readyParts.pop();
     }
 
-    if (notReadyParts[notReadyParts.length - 1].length == 0) {
+    if (notReadyParts[notReadyParts.length - 1].length === 0) {
         notReadyParts.pop();
     }
 

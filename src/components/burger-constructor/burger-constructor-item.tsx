@@ -1,13 +1,12 @@
-import React from 'react';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { deleteItem, replace, selectConstructor } from '../../services/burger-constructor';
-import { AppDispatch } from '../../services/store';
 import { useDrag, useDrop } from 'react-dnd';
+import { useAppDispatch } from '../../services/store';
 
 const BurgerConstructorItem = ({index} : {index: number}) => {
     const {bun, items} = useSelector(selectConstructor);
-    const dispatch = useDispatch.withTypes<AppDispatch>()();
+    const dispatch = useAppDispatch();
     const [{isDrag}, dragRef] = useDrag({
         type: "reorder",
         item: { index2: index },

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'; 
+import { useMemo } from 'react'; 
 import {CurrencyIcon}  from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients-item.module.css'
 import { useDrag } from 'react-dnd';

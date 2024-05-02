@@ -2,13 +2,13 @@ import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import { selectAuth, setResetEmail, setRestoreStep } from "../services/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { requestResetToken } from "../services/auth";
-import { AppDispatch } from "../services/store";
+import { useAppDispatch } from "../services/store";
 
 const ForgotPassword = ({ extraClass }: { extraClass: string }) => {
 
-    const dispatch = useDispatch.withTypes<AppDispatch>()();
+    const dispatch = useAppDispatch();
     const { resetEmail } = useSelector(selectAuth);
     const navigate = useNavigate();
 

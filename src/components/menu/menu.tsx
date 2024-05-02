@@ -1,8 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import styles from './menu.module.css';
 import { logout } from "../../services/auth";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../services/store";
 
 export type TMenuProps = {
     hint? : string;
@@ -11,7 +10,7 @@ export type TMenuProps = {
 
 const Menu = ({ hint, children, extraClass } : React.PropsWithChildren<TMenuProps>) => {
 
-    const dispatch = useDispatch.withTypes<AppDispatch>()();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     function className({isActive} : {isActive: boolean}) {

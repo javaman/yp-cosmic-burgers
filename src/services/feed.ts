@@ -11,23 +11,23 @@ export const WS_DISCONNECT: 'WS_DISCONNECT' = 'WS_DISCONNECT';
 const connectFeedAction = createAction<string>(WS_CONNECT);
 const disconnectFeedAction = createAction<undefined>(WS_DISCONNECT);
 
-type TWsHolder = {socket: WebSocket | null};
+type TWsHolder = { socket: WebSocket | null };
 const socketHolder: TWsHolder = {
     socket: null
 }
 
 
 const feedWsSocketActions = isAnyOf(connectFeedAction, disconnectFeedAction);
-export const wsSockedMiddleware = createListenerMiddleware({extra: socketHolder});
+export const wsSockedMiddleware = createListenerMiddleware({ extra: socketHolder });
 wsSockedMiddleware.startListening({
     matcher: feedWsSocketActions,
     effect: (action, { getState, dispatch, extra }) => {
         switch (action.type) {
             case WS_CONNECT:
-                if (extra.socket?.readyState == WebSocket.CONNECTING) {
+                if (extra.socket?.readyState === WebSocket.CONNECTING) {
                     return;
                 }
-                if (extra.socket?.readyState == WebSocket.OPEN) {
+                if (extra.socket?.readyState === WebSocket.OPEN) {
                     return;
                 }
                 if (action.payload) {
@@ -42,7 +42,7 @@ wsSockedMiddleware.startListening({
                 }
                 break;
             case WS_DISCONNECT:
-                if (extra.socket?.readyState == WebSocket.OPEN) {
+                if (extra.socket?.readyState === WebSocket.OPEN) {
                     extra.socket?.close();
                     extra.socket = null;
                     dispatch(feedSlice.actions.clearConnectionState());
@@ -52,12 +52,12 @@ wsSockedMiddleware.startListening({
     }
 });
 
-interface IFeedState  {
-    wsConnected : boolean;
+interface IFeedState {
+    wsConnected: boolean;
     orders: TOrder[];
     total: number;
     totalToday: number;
-    error? : Event;
+    error?: Event;
 }
 
 const initialState: IFeedState = {
@@ -72,18 +72,18 @@ const feedSlice = createSlice({
     initialState,
     reducers: {
         setSuccess(state) {
-            state.wsConnected= true;
+            state.wsConnected = true;
         },
-        setOrderList(state, { payload } : {payload: TOrderList}) {
+        setOrderList(state, { payload }: { payload: TOrderList }) {
             state.total = payload.total;
             state.totalToday = payload.totalToday;
             const orders: TOrder[] = [...state.orders];
             for (const el of payload.orders) {
                 const i = orders.findIndex(e => e._id === el._id);
-                if (i >= 0) {                   
-                    orders[i] = {...el, uid: orders[i].uid};
+                if (i >= 0) {
+                    orders[i] = { ...el, uid: orders[i].uid };
                 } else {
-                    orders.push({...el, uid: uuidv4()});
+                    orders.push({ ...el, uid: uuidv4() });
                 }
             }
             state.orders = [...orders];

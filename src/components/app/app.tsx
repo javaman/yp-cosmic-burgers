@@ -1,15 +1,14 @@
 import React from 'react';
 import { fetchIngredients } from '../../services/ingredients';
-import { useDispatch } from 'react-redux';
 import ModalSwitch from '../modal-switch';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AppDispatch } from '../../services/store';
+import { useAppDispatch } from '../../services/store';
 
 
 function App() {
 
-  const dispatcher = useDispatch.withTypes<AppDispatch>()();
-
+  const dispatcher = useAppDispatch();
+  
   React.useEffect(() => {
     dispatcher(fetchIngredients());
   });

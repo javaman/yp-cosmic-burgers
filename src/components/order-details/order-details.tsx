@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './order-details.module.css';
 import bullet from '../../images/od.png';
 import { useSelector } from 'react-redux';

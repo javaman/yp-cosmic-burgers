@@ -1,5 +1,4 @@
 import React from "react";
-import { createPortal } from "react-dom";
 import styles from './modal-overlay.module.css';
 
 export type TModalOverlayProps = {
@@ -18,7 +17,8 @@ const ModalOverlay = ({closeModal, children} : React.PropsWithChildren<TModalOve
          return () => {
              window.removeEventListener("keydown", handleEscape);
          };
-     }, [closeModal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+     }, []);
 
     return (
         <div className={styles.overlay} onClick={closeModal}>

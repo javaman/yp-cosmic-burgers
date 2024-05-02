@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, selectFeed } from "../services/store";
+import { useSelector } from "react-redux";
+import { selectFeed, useAppDispatch } from "../services/store";
 import { connectFeedAction, disconnectFeedAction } from "../services/feed";
 import { FEED_URL } from "../constants";
 import  styles from './feed.module.css';
@@ -9,7 +9,7 @@ import { FeedStatistics } from "../components/feed-statistics/feed-statistics";
 
 const Feed = ({ extraClass } : { extraClass : string }) => {
 
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();        
+    const dispatch =  useAppDispatch();  
     const feed = useSelector(selectFeed);
 
     useEffect(() => {
@@ -17,6 +17,7 @@ const Feed = ({ extraClass } : { extraClass : string }) => {
         return () => {
             dispatch(disconnectFeedAction());
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (<div className={`${extraClass} ${styles.container}`}>

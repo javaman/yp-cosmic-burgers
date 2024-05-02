@@ -1,6 +1,5 @@
 import { MouseEvent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../services/store";
+import { useSelector } from "react-redux";
 import { connectFeedAction, disconnectFeedAction } from "../services/feed";
 import { FEED_URL } from "../constants";
 import Cookies from 'js-cookie';
@@ -10,12 +9,13 @@ import styles from "./orders.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { TOrder } from "../services/types";
 import { showOrderInfo } from "../services/modals";
+import { useAppDispatch } from "../services/store";
 
 const Orders = ({extraClass} : {extraClass?: string}) => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch =  useAppDispatch();
     const feed = useSelector(selectFeed);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Orders = ({extraClass} : {extraClass?: string}) => {
         return () => {
             dispatch(disconnectFeedAction());
         };
-    }, []);
+    }, [dispatch]);
 
     function showModal(e : MouseEvent, order: TOrder) {
         e.preventDefault();

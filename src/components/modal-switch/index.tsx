@@ -3,7 +3,7 @@ import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Index, Login, Register, ForgotPassword, ResetPassword } from '../../pages';
 import { Profile } from '../../pages/profile';
@@ -15,6 +15,7 @@ import { closeModal, selectModals } from '../../services/modals';
 import Feed from '../../pages/feed';
 import { Order } from '../../pages/order';
 import { OrderInfo } from '../order-info/order-info';
+import { useAppDispatch } from '../../services/store';
 
 export default function ModalSwitch() {
     const location = useLocation();
@@ -22,7 +23,7 @@ export default function ModalSwitch() {
     const background = location.state && location.state.background;
     const id = location.state && location.state.id;
 
-    const dispatcher = useDispatch();
+    const dispatcher = useAppDispatch();
 
     function closeIngredients() {
         navigate(-1);

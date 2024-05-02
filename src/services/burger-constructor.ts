@@ -29,12 +29,12 @@ const burgerConstructorSlice = createSlice({
             state.bun = undefined;
         },
         deleteItem(state, {payload}) {
-            state.items = state.items.filter((e, i) => i != payload);
+            state.items = state.items.filter((e, i) => i !== payload);
         },
         replace(state, {payload}) {
             const {index2, index} = payload;
             const item = state.items[index2];
-            state.items = state.items.filter((itm, idx) => idx != index2);
+            state.items = state.items.filter((itm, idx) => idx !== index2);
             state.items.splice(index, 0, item); 
         }
     }

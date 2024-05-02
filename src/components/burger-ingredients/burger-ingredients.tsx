@@ -1,7 +1,6 @@
 import React, { RefObject, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import BurgerIngredientsRow, { TBurgerIngredientsRowParam } from '../burger-ingredients-row/burger-ingredients-row';
 import { useSelector } from 'react-redux';
 import { selectIngredients } from '../../services/ingredients';

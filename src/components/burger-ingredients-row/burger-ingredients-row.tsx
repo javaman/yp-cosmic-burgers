@@ -1,11 +1,10 @@
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import styles from './burger-ingredients-row.module.css';
 import { showIngredient } from "../../services/modals";
-import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import TBurgerItem from "../../types/burger-types";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../services/store";
 
 export type TBurgerIngredientsRowParam = {
     firstItem: TBurgerItem;
@@ -14,7 +13,7 @@ export type TBurgerIngredientsRowParam = {
 
 const BurgerIngredientsRow = (props : TBurgerIngredientsRowParam) => {
 
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch =  useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 

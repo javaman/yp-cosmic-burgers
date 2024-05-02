@@ -1,18 +1,19 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
 import { getProfile, selectAuth } from "../services/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { setName, setEmail } from "../services/auth";
 import { updateProfile } from "../services/auth";
-import { AppDispatch } from "../services/store";
+import { useAppDispatch } from "../services/store";
 
 const Profile = () => {
 
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch = useAppDispatch();
     const { email, name } = useSelector(selectAuth);
 
     useEffect(() => {
         dispatch(getProfile());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function submit(e : React.FormEvent) {

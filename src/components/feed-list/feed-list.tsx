@@ -1,15 +1,14 @@
 import { FeedListItem } from "../feed-list-item/feed-list-item";
 import { TOrder } from "../../services/types";
 import { MouseEvent } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
 import { showOrderInfo } from "../../services/modals";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAppDispatch } from "../../services/store";
 
 
 export const FeedList = ({orders} : {orders : TOrder[]}) => {
 
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch =  useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 

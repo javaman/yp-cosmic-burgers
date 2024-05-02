@@ -1,15 +1,14 @@
-import { TOrder } from '../../services/types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { selectIngredients } from '../../services/ingredients';
 import { selectOrder } from '../../services/order';
 import { fetchOrder } from '../../services/order';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from '../../services/store';
+import { useSelector } from "react-redux";
+import { useAppDispatch } from '../../services/store';
 
-const OrderInfoIngredient = ({row} : {row: TIngredientInfo}) => {
+const OrderInfoIngredient = ({row} : {row: TIngredientInfo}) => {    
     return (
-        <div><img src={row.icon} />{row.name}&nbsp;{row.count} x {row.price}<CurrencyIcon type="primary" /> </div>
+        <div><img alt="" src={row.icon} />{row.name}&nbsp;{row.count} x {row.price}<CurrencyIcon type="primary" /> </div>
     );
 };
 
@@ -25,10 +24,11 @@ type TIngredientInfo = {
 export const OrderInfo = ({ number }: { number : number }) => {
     const { ingredients } = useSelector(selectIngredients);
     const { order } = useSelector(selectOrder);
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch =  useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchOrder(number));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const myMap = new Map<string, TIngredientInfo>();
@@ -39,7 +39,7 @@ export const OrderInfo = ({ number }: { number : number }) => {
             if (row) {
                 row.count = row.count + 1;
             } else {
-                const j = ingredients.find(x => x._id == ingredient);
+                const j = ingredients.find(x => x._id === ingredient);
                 if (j) {
                     myMap.set(ingredient, {
                         id: ingredient,
