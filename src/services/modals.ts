@@ -41,8 +41,4 @@ const modalsSlice = createSlice({
     }});
 
 export const { showOrder, closeModal, showIngredient, showOrderInfo } = modalsSlice.actions;
-
-
-export const selectModals = (state: RootState) => state.modals
-
 export default modalsSlice.reducer;

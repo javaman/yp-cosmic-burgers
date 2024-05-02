@@ -42,4 +42,3 @@ const burgerConstructorSlice = createSlice({
 
 export const { drop, deleteItem, deleteBun, replace } = burgerConstructorSlice.actions;
 export default burgerConstructorSlice.reducer;
-export const selectConstructor = (state: RootState) => state.burgerConstructor;

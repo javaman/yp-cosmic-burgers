@@ -1,12 +1,11 @@
 import styles from "./ingredient.module.css";
 import { useParams } from "react-router-dom";
-import { useSelector  } from "react-redux";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { selectIngredients } from "../services/ingredients";
+import { useAppSelector } from "../services/store";
 
 const Ingredient = ({ extraClass } : { extraClass: string }) => {
     const { id } = useParams();
-    const { ingredients } = useSelector(selectIngredients);
+    const { ingredients } = useAppSelector( store => store.ingredients );
     const item = ingredients.find(element => element._id === id);
     return (
         <section className={`${extraClass} ${styles.form}`}>            

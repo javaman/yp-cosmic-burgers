@@ -1,15 +1,14 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
-import { getProfile, selectAuth } from "../services/auth";
-import { useSelector } from "react-redux";
+import { getProfile } from "../services/auth";
 import { setName, setEmail } from "../services/auth";
 import { updateProfile } from "../services/auth";
-import { useAppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const Profile = () => {
 
     const dispatch = useAppDispatch();
-    const { email, name } = useSelector(selectAuth);
+    const { email, name } = useAppSelector( store => store.auth );
 
     useEffect(() => {
         dispatch(getProfile());

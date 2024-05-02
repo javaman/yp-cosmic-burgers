@@ -1,22 +1,20 @@
 import { MouseEvent, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { connectFeedAction, disconnectFeedAction } from "../services/feed";
 import { FEED_URL } from "../constants";
 import Cookies from 'js-cookie';
-import { selectFeed } from "../services/store";
 import { FeedListItem } from "../components/feed-list-item/feed-list-item";
 import styles from "./orders.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { TOrder } from "../services/types";
 import { showOrderInfo } from "../services/modals";
-import { useAppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const Orders = ({extraClass} : {extraClass?: string}) => {
 
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch =  useAppDispatch();
-    const feed = useSelector(selectFeed);
+    const feed = useAppSelector( store => store.feed );
 
     useEffect(() => {
         dispatch(connectFeedAction(`${FEED_URL}?token=${Cookies.get('access-token')?.substring(7)}`));

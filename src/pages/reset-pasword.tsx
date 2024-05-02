@@ -1,14 +1,13 @@
 import styles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectAuth, sendNewPassword, setNewPassword, setNewPasswordToken } from "../services/auth";
+import { sendNewPassword, setNewPassword, setNewPasswordToken } from "../services/auth";
 import { useEffect } from "react";
-import { useAppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const ResetPassword = ({ extraClass } : { extraClass : string }) => {
 
-    const { newPassword, newPasswordToken, restoreStep } = useSelector(selectAuth);
+    const { newPassword, newPasswordToken, restoreStep } = useAppSelector( store => store.auth );
     const dispatch =  useAppDispatch();
     const navigate = useNavigate();
 

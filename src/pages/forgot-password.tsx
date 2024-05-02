@@ -1,15 +1,14 @@
 import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { selectAuth, setResetEmail, setRestoreStep } from "../services/auth";
-import { useSelector } from "react-redux";
+import { setResetEmail, setRestoreStep } from "../services/auth";
 import { requestResetToken } from "../services/auth";
-import { useAppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const ForgotPassword = ({ extraClass }: { extraClass: string }) => {
 
     const dispatch = useAppDispatch();
-    const { resetEmail } = useSelector(selectAuth);
+    const { resetEmail } = useAppSelector( store => store.auth );
     const navigate = useNavigate();
 
     function restorePassword(e: React.FormEvent) {

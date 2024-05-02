@@ -65,7 +65,7 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
 
 function mapParts(parts: TOrder[][]): any {
     return (
-        parts.map(ps => <li><ul>
-            {ps.map(p => <li>{`${p.number}`}</li>)}
+        parts.map(ps => <li key={ps[0].uid + "k"}><ul>
+            {ps.map(p => <li key={p.uid}>{`${p.number}`}</li>)}
         </ul></li>));
 };

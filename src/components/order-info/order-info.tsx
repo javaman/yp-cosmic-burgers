@@ -1,10 +1,8 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { selectIngredients } from '../../services/ingredients';
-import { selectOrder } from '../../services/order';
 import { fetchOrder } from '../../services/order';
 import { useEffect } from 'react';
-import { useSelector } from "react-redux";
 import { useAppDispatch } from '../../services/store';
+import { useAppSelector } from '../../services/store';
 
 const OrderInfoIngredient = ({row} : {row: TIngredientInfo}) => {    
     return (
@@ -22,8 +20,8 @@ type TIngredientInfo = {
 }
 
 export const OrderInfo = ({ number }: { number : number }) => {
-    const { ingredients } = useSelector(selectIngredients);
-    const { order } = useSelector(selectOrder);
+    const { ingredients } = useAppSelector( store => store.ingredients );
+    const { order } = useAppSelector( store=> store.order );
     const dispatch =  useAppDispatch();
 
     useEffect(() => {

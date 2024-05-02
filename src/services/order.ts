@@ -78,6 +78,4 @@ const orderSlice = createSlice({
     }
 });
 
-export const selectOrder = (state: RootState) => state.order;
-
 export default orderSlice.reducer;

@@ -3,7 +3,6 @@ import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import { useSelector } from 'react-redux';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { Index, Login, Register, ForgotPassword, ResetPassword } from '../../pages';
 import { Profile } from '../../pages/profile';
@@ -11,11 +10,12 @@ import { Menu } from '../menu/menu';
 import Orders from '../../pages/orders';
 import Protect from '../protect';
 import { Ingredient } from '../../pages/ingredient';
-import { closeModal, selectModals } from '../../services/modals';
+import { closeModal } from '../../services/modals';
 import Feed from '../../pages/feed';
 import { Order } from '../../pages/order';
 import { OrderInfo } from '../order-info/order-info';
 import { useAppDispatch } from '../../services/store';
+import { useAppSelector } from '../../services/store';
 
 export default function ModalSwitch() {
     const location = useLocation();
@@ -28,7 +28,7 @@ export default function ModalSwitch() {
     function closeIngredients() {
         navigate(-1);
     };
-    const { orderVisible,  orderInfoVisible } = useSelector(selectModals);
+    const { orderVisible,  orderInfoVisible } = useAppSelector(store => store.modals);
 
     return (
         <div className={styles.container}>
@@ -47,12 +47,12 @@ export default function ModalSwitch() {
                 <Route path="/profile/orders/:id" element={ <Protect element={<Order extraClass={styles.content} />} authorized={true} to="/login" /> } />
             </Routes>
             {
-                background && orderInfoVisible &&
+                background && orderInfoVisible && 
                     <Modal closeModal={() => { dispatcher(closeModal()); navigate(-1);}}>
                         <OrderInfo number={Number(id)}/>
                     </Modal>
             }
-            { background && !orderInfoVisible && 
+            { background && !orderInfoVisible && (location.pathname.search("ingredients") > 1) &&
                                         <Modal closeModal={closeIngredients} title="Детали ингредиента">
                                             <IngredientDetails  id={id} />
                                         </Modal>} 

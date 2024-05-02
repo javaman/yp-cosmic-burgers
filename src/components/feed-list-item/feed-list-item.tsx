@@ -1,10 +1,9 @@
 import { TOrder } from "../../services/types";
-import { selectIngredients } from "../../services/ingredients";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store";
 
 export const FeedListItem = ({order} : {order : TOrder}) => {
 
-    const { ingredients } = useSelector(selectIngredients);
+    const { ingredients } = useAppSelector( store => store.ingredients );
 
     const ingredientImages = order.ingredients.reduce((accumulator, item) => {
         if (!accumulator.has(item)) {
@@ -21,7 +20,7 @@ export const FeedListItem = ({order} : {order : TOrder}) => {
         <div>
             <div>#{order.number}&nbsp;{order.createdAt.toLocaleString()}</div>
             <div>#{order.name}</div>
-            <div style={{alignItems: "flex-start", display: "flex", transform: "scale(0.5)", boxSizing: "border-box", left: 0, bottom: 0, width: "100%"}}>{Array.from(ingredientImages.values()).map(i => <img src={i} />)}</div>
+            <div style={{alignItems: "flex-start", display: "flex", transform: "scale(0.5)", boxSizing: "border-box", left: 0, bottom: 0, width: "100%"}}>{Array.from(ingredientImages.values()).map(i => <img key={order.uid + i} src={i} />)}</div>
         </div>
     );
 };

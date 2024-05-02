@@ -277,5 +277,4 @@ const authSlice = createSlice({
 
 export const { setRestoreStep, setResetEmail, setNewPassword, setNewPasswordToken, setRegisterEmail, setRegisterPassword, 
                setRegisterLogin, setLoginEmail, setLoginPassword, setLoginState, setName, setEmail } = authSlice.actions;
-export const selectAuth = (state: RootState) => state.auth;
 export default authSlice.reducer;

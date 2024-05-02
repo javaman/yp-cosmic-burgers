@@ -1,13 +1,12 @@
 import styles from "./register.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { register, selectAuth, setRegisterEmail, setRegisterLogin, setRegisterPassword } from "../services/auth";
-import { useAppDispatch } from "../services/store";
+import { register, setRegisterEmail, setRegisterLogin, setRegisterPassword } from "../services/auth";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 
 const Register = ( { extraClass } : { extraClass : string } ) => {
-    const { registerEmail, registerLogin, registerPassword } = useSelector(selectAuth);
+    const { registerEmail, registerLogin, registerPassword } = useAppSelector( store => store.auth );
     const navigate = useNavigate();
     const dispatch =  useAppDispatch();
     function registerButtonClicked() {

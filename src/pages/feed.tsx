@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectFeed, useAppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 import { connectFeedAction, disconnectFeedAction } from "../services/feed";
 import { FEED_URL } from "../constants";
 import  styles from './feed.module.css';
@@ -10,7 +9,7 @@ import { FeedStatistics } from "../components/feed-statistics/feed-statistics";
 const Feed = ({ extraClass } : { extraClass : string }) => {
 
     const dispatch =  useAppDispatch();  
-    const feed = useSelector(selectFeed);
+    const feed = useAppSelector( store => store.feed);
 
     useEffect(() => {
         dispatch(connectFeedAction(`${FEED_URL}/all`));
