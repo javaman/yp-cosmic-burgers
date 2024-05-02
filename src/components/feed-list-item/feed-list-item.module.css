@@ -1,0 +1,13 @@
+.feedItem {
+    background-color: rgb(26, 26, 30);
+    border-radius: 25px;
+}
+
+.oNum {
+    float: left;   
+}
+
+.oDate {
+    float: right;
+    color: rgb(121, 122, 162);
+}

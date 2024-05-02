@@ -1,0 +1,52 @@
+.imageStack {
+    position: relative;
+    height: 50px;
+}
+
+.img0 {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    z-index: 10;
+}
+
+.img1 {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    z-index: 11;
+}
+
+.img2 {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    z-index: 12;
+}
+
+.img3 {
+    position: absolute;
+    top: 0;
+    left: 100px;
+    z-index: 13;
+}
+
+.img4 {
+    position: absolute;
+    top: 0;
+    left: 140px;
+    z-index: 14;
+}
+
+.txt {
+    position: absolute;
+    top: 17px;
+    left: 190px;
+    z-index: 15;
+}
+
+.sumAndIcon {
+    position: absolute;
+    top: 17px;
+    right: 0px;
+}

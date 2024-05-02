@@ -14,4 +14,8 @@
   .feedList { grid-area: feed-list; }
   
   .feedStatistics { grid-area: feed-statistics; }
-  
+
+.feedList > div {
+  height: 900px;
+  overflow-x: auto;
+}

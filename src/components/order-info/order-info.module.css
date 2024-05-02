@@ -1,0 +1,22 @@
+.ingredients {
+    overflow-x: auto;
+    height: 400px;
+}
+
+.orderName {
+    max-width: 600px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+    vertical-align: top;
+}
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+}

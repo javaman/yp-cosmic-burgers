@@ -54,3 +54,14 @@ ul.hlist {
     height: 70%;
 }
 
+.ready li {
+    color: rgb(66, 193, 196);
+}
+
+.neon {
+    color: rgb(240, 240, 241);
+    text-shadow:
+      0 0 7px rgb(27, 24, 82),
+      0 0 10px rgb(25, 24, 70),
+      0 0 21px rgb(22, 21, 40)
+}

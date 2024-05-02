@@ -1,8 +1,9 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { fetchOrder } from '../../services/order';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../services/store';
-import { useAppSelector } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import styles from './order-info.module.css';
+import moment from "moment/min/moment-with-locales";
 
 const OrderInfoIngredient = ({row} : {row: TIngredientInfo}) => {    
     return (
@@ -23,6 +24,9 @@ export const OrderInfo = ({ number }: { number : number }) => {
     const { ingredients } = useAppSelector( store => store.ingredients );
     const { order } = useAppSelector( store=> store.order );
     const dispatch =  useAppDispatch();
+
+
+    moment.locale("ru");
 
     useEffect(() => {
         dispatch(fetchOrder(number));
@@ -55,23 +59,25 @@ export const OrderInfo = ({ number }: { number : number }) => {
   
     return (
         <div>
-            <div>
+            <div className={`${styles.orderNumber} text text_type_digits-default`}>
                 #{order?.number}
             </div>
-            <div>
+            <div className={` ${styles.orderName} text text_type_main-medium mt-8`}>
                 {order?.name}
             </div>
-            <div>
+            <div className={`text text_type_main mt-8`}>
                 {order?.status === "done" ? "Выполнен" : order?.status === "pending" ? "Готовится" : "Отменён"}    
             </div>
-            <div>
+            <div className={`text text_type_main-medium mt-8`}> 
                 Состав:
             </div>
-            <ul style={{listStyleType: "none"}}>
-                {Array.from(myMap.values()).map(i => <li key={i.id}><OrderInfoIngredient row={i} /></li>)}
-            </ul>
-            <div>
-                <span>{order?.createdAt.toLocaleString()}</span><CurrencyIcon type="primary" /><span>{sum}</span>
+            <div className={styles.ingredients}>
+                <ul className={styles.list}>
+                    {Array.from(myMap.values()).map(i => <li key={i.id}><OrderInfoIngredient row={i} /></li>)}
+                </ul>
+            </div>
+            <div className={styles.bottom}>
+                <span className={`${styles.left} text text_type_main-default text_color_inactive`}>{moment(order?.createdAt).calendar()}</span><span className={styles.right}><span className='text text_type_digits-default'>{sum}</span>&nbsp;&nbsp;<CurrencyIcon type="primary" /></span>
             </div>
         </div>
     );

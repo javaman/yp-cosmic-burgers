@@ -52,7 +52,7 @@ export default function ModalSwitch() {
                         <OrderInfo number={Number(id)}/>
                     </Modal>
             }
-            { background && !orderInfoVisible && (location.pathname.search("ingredients") > 1) &&
+            { background && !orderInfoVisible && (location.pathname.search("ingredients") > 0) &&
                                         <Modal closeModal={closeIngredients} title="Детали ингредиента">
                                             <IngredientDetails  id={id} />
                                         </Modal>} 

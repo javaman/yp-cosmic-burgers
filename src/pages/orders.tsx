@@ -31,9 +31,11 @@ const Orders = ({extraClass} : {extraClass?: string}) => {
     }
 
     return (<div className={extraClass}> 
-        <ul className={styles.list}>
-            {feed.orders.map(o => <li key={o.uid} onClick={e => showModal(e, o)}><FeedListItem order={o} /></li>)}
-        </ul>
+        <div className={styles.scrollWrap}>
+            <ul className={styles.list}>
+                {feed.orders.map(o => <li key={o.uid} onClick={e => showModal(e, o)}><FeedListItem order={o} /></li>)}
+            </ul>
+        </div>
     </div>);
 }
 

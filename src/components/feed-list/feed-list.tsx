@@ -4,6 +4,7 @@ import { MouseEvent } from "react";
 import { showOrderInfo } from "../../services/modals";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../services/store";
+import styles from "./feed-list.module.css";
 
 
 export const FeedList = ({orders} : {orders : TOrder[]}) => {
@@ -20,9 +21,9 @@ export const FeedList = ({orders} : {orders : TOrder[]}) => {
     }
 
     return (
-        <ul>
+        <ul className={styles.feedList}>
             {
-                [...orders].reverse().map(o => <li key={o.uid} onClick={e => handleClick(e, o)}><FeedListItem order={o} /></li>)
+                orders.map(o => <li key={o.uid} onClick={e => handleClick(e, o)}><FeedListItem order={o} /></li>)
             }               
         </ul>
     );

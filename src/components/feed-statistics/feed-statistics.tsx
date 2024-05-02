@@ -34,8 +34,8 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
 
     return (
         <div className={styles.container}>
-            <div className={styles.ready}>
-                <div>Готовы:</div>
+            <div className={`${styles.ready} mr-10`}>
+                <div className='text text_type_main-medium'>Готовы:</div>
                 <div className={styles.horScroll}>
                     {
                         readyParts.length > 0 && <ul className={styles.hlist}>{mapParts(readyParts)}</ul>
@@ -43,7 +43,7 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
                 </div>
             </div>
             <div className={styles.progress}>
-                <div>В работе:</div>
+                <div className='text text_type_main-medium'>В работе:</div>
                 <div>
                     {
                         notReadyParts.length > 0 && <ul className={styles.hlist}>{mapParts(notReadyParts)}</ul>
@@ -51,13 +51,13 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
                 </div>
             </div>
             <div className={styles.total}>
-                <div>Выполнено за все время:</div>
-                <div>{total}</div>
+                <div className='text text_type_main-medium mb-8'>Выполнено за все время:</div>
+                <div className={`text text_type_digits-large ${styles.neon}`}>{total}</div>
             </div>
 
-            <div className={styles.today}>
-                <div>Выполнено за сегодня:</div>
-                <div>{today}</div>
+            <div className={styles.day}>
+               <div className='text text_type_main-medium mb-8 mt-8'>Выполнено за сегодня:</div>
+                <div className={`text text_type_digits-large ${styles.neon}`}>{today}</div>
             </div>
         </div>
     );
@@ -66,6 +66,6 @@ export const FeedStatistics = ({ orders, total, today }: { orders: TOrder[]; tot
 function mapParts(parts: TOrder[][]): any {
     return (
         parts.map(ps => <li key={ps[0].uid + "k"}><ul>
-            {ps.map(p => <li key={p.uid}>{`${p.number}`}</li>)}
+            {ps.map(p => <li className={`text text_type_digits-default`} key={p.uid}>{`${p.number}`}</li>)}
         </ul></li>));
 };
