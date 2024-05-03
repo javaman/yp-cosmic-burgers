@@ -14,7 +14,9 @@ export const FeedListItem = ({order} : {order : TOrder}) => {
     let sum = 0;
     let count = 0;
 
-    const ingredientImages = order.ingredients.reduce((accumulator, item) => {
+    const urls = new Map<string, string>();
+
+    order.ingredients.reduce((accumulator, item) => {
         const ingredient = ingredients.find(ing => ing._id === item);
         if (ingredient) {
             sum += ingredient.price;
@@ -22,14 +24,14 @@ export const FeedListItem = ({order} : {order : TOrder}) => {
             accumulator.set(item, ingredient.image_mobile);
         }
         return accumulator;
-    }, new Map<string, string>());
+    }, urls);
 
     return (
         <div className={`${styles.feedItem} m-4 p-4`}>
             <div className="mb-4"><span className={`text text_type_main-medium ${styles.oNum}`}>#{order.number}</span><span className={`${styles.oDate} text text_type_main-default`}>{moment(order.createdAt).calendar()}</span></div>
             <div className="text text_type_main-medium mt-8">{order.name}</div>
             <div>
-                <ImageStack sum={sum} count={count} images={Array.from(ingredientImages.values())} />
+                <ImageStack sum={sum} count={count} images={Array.from(urls.values())} />
             </div>
         </div>
     );

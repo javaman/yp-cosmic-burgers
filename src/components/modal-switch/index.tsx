@@ -47,7 +47,7 @@ export default function ModalSwitch() {
                 <Route path="/profile/orders/:id" element={ <Protect element={<Order extraClass={styles.content} />} authorized={true} to="/login" /> } />
             </Routes>
             {
-                background && orderInfoVisible && 
+                background && (location.pathname.search("feed") > 0 || location.pathname.search("orders") > 0) && 
                     <Modal closeModal={() => { dispatcher(closeModal()); navigate(-1);}}>
                         <OrderInfo number={Number(id)}/>
                     </Modal>
