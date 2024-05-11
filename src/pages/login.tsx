@@ -1,18 +1,17 @@
 import styles from "./login.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { selectAuth, setLoginEmail, setLoginPassword } from "../services/auth";
-import { useSelector, useDispatch } from "react-redux";
+import { setLoginEmail, setLoginPassword } from "../services/auth";
 import { login } from "../services/auth";
 import { setLoginState } from "../services/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const Login = ({extraClass} : {extraClass : string}) => {
-    const { loginEmail, loginPassword, loginState, loginError } = useSelector(selectAuth);
+    const { loginEmail, loginPassword, loginState, loginError } = useAppSelector( store => store.auth );
     const navigate = useNavigate();
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const dispatch =  useAppDispatch();
 
     useEffect(() => {
         switch (loginState) {

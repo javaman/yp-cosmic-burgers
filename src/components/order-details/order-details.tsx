@@ -1,12 +1,9 @@
-import React from 'react';
 import styles from './order-details.module.css';
 import bullet from '../../images/od.png';
-import { useSelector } from 'react-redux';
-import { selectOrder } from '../../services/order';
-
+import { useAppSelector } from '../../services/store';
 
 const OrderDetails = () => {
-    const {orderNumber} = useSelector( selectOrder );
+    const {orderNumber} = useAppSelector( store => store.order );
     return (
         <div>
             <div className={styles.centered + ' text text_type_digits-large mt-8'}>{orderNumber}</div>

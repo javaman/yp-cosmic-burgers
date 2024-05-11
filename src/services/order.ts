@@ -4,11 +4,14 @@ import { showOrder } from './modals';
 import { checkResponse } from '../utils/networking';
 import { TBurgerItemWithUuid } from './burger-constructor';
 import { RootState } from './store';
+import Cookies from 'js-cookie';
+import { TOrder } from './types';
 
 interface IOrderState {
     orderNumber: number;
     loading: boolean;
     loadingFailed: boolean;
+    order?: TOrder;
 }
 
 const initialState: IOrderState = {
@@ -30,6 +33,7 @@ export const submitOrder = createAsyncThunk(
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': Cookies.get('access-token') ?? ''
             },
             body: JSON.stringify({
                 ingredients: items
@@ -39,6 +43,13 @@ export const submitOrder = createAsyncThunk(
         return res;
     },
 );
+
+export const fetchOrder = createAsyncThunk(
+    'order/getOrder',
+    async (orderId: number, thunkApi) => {
+        return await fetch(`${SUBMIT_URL}/${orderId}`).then(checkResponse);
+    },
+)
 
 const orderSlice = createSlice({
     name: 'order',
@@ -60,9 +71,11 @@ const orderSlice = createSlice({
             state.loading = false;
             state.loadingFailed = true;
         });
+
+        builder.addCase(fetchOrder.fulfilled, (state, action) => {
+            state.order = {...action.payload.orders[0]}
+        });
     }
 });
-
-export const selectOrder = (state: RootState) => state.order;
 
 export default orderSlice.reducer;

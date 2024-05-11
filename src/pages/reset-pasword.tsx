@@ -1,15 +1,14 @@
 import styles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAuth, sendNewPassword, setNewPassword, setNewPasswordToken } from "../services/auth";
+import { sendNewPassword, setNewPassword, setNewPasswordToken } from "../services/auth";
 import { useEffect } from "react";
-import { AppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const ResetPassword = ({ extraClass } : { extraClass : string }) => {
 
-    const { newPassword, newPasswordToken, restoreStep } = useSelector(selectAuth);
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const { newPassword, newPasswordToken, restoreStep } = useAppSelector( store => store.auth );
+    const dispatch =  useAppDispatch();
     const navigate = useNavigate();
 
 
@@ -25,6 +24,7 @@ const ResetPassword = ({ extraClass } : { extraClass : string }) => {
             dispatch(setNewPassword(''));
             dispatch(setNewPasswordToken(''));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     

@@ -1,11 +1,9 @@
 import React, { RefObject, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import BurgerIngredientsRow, { TBurgerIngredientsRowParam } from '../burger-ingredients-row/burger-ingredients-row';
-import { useSelector } from 'react-redux';
-import { selectIngredients } from '../../services/ingredients';
 import TBurgerItem from '../../types/burger-types';
+import { useAppSelector } from '../../services/store';
 
 type TAnchors = {
     bun: RefObject<HTMLLIElement>;
@@ -17,7 +15,7 @@ type TAnchor = keyof TAnchors;
 
 const BurgerIngredients = () => {
 
-    const { ingredients } = useSelector(selectIngredients);
+    const { ingredients } = useAppSelector( store => store.ingredients );
 
     const anchors: TAnchors = {
         bun: React.createRef(),

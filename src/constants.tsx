@@ -1,8 +1,10 @@
 import BurgerItem from './types/burger-types';
 
-export const BASE_URL = "https://norma.nomoreparties.space/api"; 
+export const DOMAIN = "norma.nomoreparties.space";
+export const BASE_URL = `https://${DOMAIN}/api`; 
 export const API_URL = BASE_URL + "/ingredients";
 export const SUBMIT_URL = BASE_URL + "/orders";
+export const FEED_URL = `wss://${DOMAIN}/orders`;
 
 export const BUN: BurgerItem = {
   "_id": "643d69a5c3f7b9001cfa093c",

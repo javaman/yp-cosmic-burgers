@@ -13,6 +13,7 @@ export default function Protect({ element, authorized, to } : {authorized: boole
         if (!secure) {
             navigate(to);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [secure])
     
     if (secure) {

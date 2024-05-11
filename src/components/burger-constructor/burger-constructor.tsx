@@ -1,20 +1,20 @@
 import React, { useMemo } from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { drop, selectConstructor } from '../../services/burger-constructor';
+import { drop } from '../../services/burger-constructor';
 import { submitOrder } from '../../services/order';
 import BurgerConstructorItem from './burger-constructor-item';
 import { v4 as uuidv4 } from 'uuid';
 import { isAuthenticated } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch } from '../../services/store';
 import TBurgerItem from '../../types/burger-types';
+import { useAppDispatch } from '../../services/store';
+import { useAppSelector } from '../../services/store';
 
 const BurgerConstructor = () => {
-    const {bun, items} = useSelector(selectConstructor);
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
+    const {bun, items} = useAppSelector( store => store.burgerConstructor );
+    const dispatch =  useAppDispatch();
 
     const [{isHover}, dropTarget] = useDrop({
         accept: "item",

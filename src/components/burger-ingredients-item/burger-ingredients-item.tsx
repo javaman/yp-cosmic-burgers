@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react'; 
+import { useMemo } from 'react'; 
 import {CurrencyIcon}  from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients-item.module.css'
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
 import TBurgerItem from '../../types/burger-types';
-import { selectConstructor } from '../../services/burger-constructor';
+import { useAppSelector } from '../../services/store';
 
 export type TBurgerIngredientsItemParams = {
     item: TBurgerItem
@@ -19,7 +18,7 @@ const BurgerIngredientsItem = ({item} : TBurgerIngredientsItemParams) => {
         })
     });
 
-    const { items, bun } = useSelector(selectConstructor);
+    const { items, bun } = useAppSelector( store => store.burgerConstructor );
 
     const count = useMemo(() => {
         if (item.type === 'bun') {

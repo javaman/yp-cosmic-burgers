@@ -47,6 +47,4 @@ const ingredientsSlice = createSlice({
     }
 });
 
-export const selectIngredients = (state: RootState) => state.ingredients;
-
 export default ingredientsSlice.reducer;

@@ -190,7 +190,7 @@ refreshTokenMiddleware.startListening({
     effect: async (action, { getState }) => {
         const { auth } = getState() as { auth: IAuthState};
         localStorage.setItem("refresh-token", auth.refreshToken ?? '');
-        Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96});
+        console.log(Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96}));
     }
 });
 
@@ -277,5 +277,4 @@ const authSlice = createSlice({
 
 export const { setRestoreStep, setResetEmail, setNewPassword, setNewPasswordToken, setRegisterEmail, setRegisterPassword, 
                setRegisterLogin, setLoginEmail, setLoginPassword, setLoginState, setName, setEmail } = authSlice.actions;
-export const selectAuth = (state: RootState) => state.auth;
 export default authSlice.reducer;

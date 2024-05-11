@@ -1,20 +1,18 @@
-import { NavLink, useOutlet } from "react-router-dom";
-import styles from './profile.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
-import { getProfile, selectAuth } from "../services/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../services/auth";
 import { setName, setEmail } from "../services/auth";
 import { updateProfile } from "../services/auth";
-import { AppDispatch } from "../services/store";
+import { useAppDispatch, useAppSelector } from "../services/store";
 
 const Profile = () => {
 
-    const dispatch =  useDispatch.withTypes<AppDispatch>()();
-    const { email, name } = useSelector(selectAuth);
+    const dispatch = useAppDispatch();
+    const { email, name } = useAppSelector( store => store.auth );
 
     useEffect(() => {
         dispatch(getProfile());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function submit(e : React.FormEvent) {
