@@ -8,7 +8,7 @@ function formatNumber(number: number) {
     }
 }
 
-const NutritionFact = ({name, number} : {name: string; number: number}) => {
+const NutritionFact = ({name, number} : {name: string; number: number;}) => {
     return (<div className='m-4'>
         <div className={styles.row2 + ' text text_type_main-small mb-2'}>
             {name}

@@ -48,7 +48,7 @@ const BurgerConstructor = () => {
     }
 
     return (
-        <div ref={dropTarget} style={extraClass} >
+        <div ref={dropTarget} style={extraClass} data-cy="dropTarget" >
             <div className={styles.listScroll}>
                 <ul className={styles.c}>
                     {bun && <BurgerConstructorItem key={bun.uuid + "-top"} index={-1} />}
@@ -59,7 +59,7 @@ const BurgerConstructor = () => {
             <div className={styles.buttonFooter}>
                 <span className='text text_type_digits-medium mr-2'>{total}</span>
                 <CurrencyIcon type='primary' />
-                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4'  onClick={orderSubmited}>
+                <Button htmlType="button" type="primary" size="medium" extraClass='ml-4'  onClick={orderSubmited} data-cy="order-button">
                     Оформить заказ
                 </Button>
             </div>
