@@ -4,4 +4,4 @@
 
 [https://ypburgers.nomoredomainswork.ru/](https://ypburgers.nomoredomainswork.ru/)
 
-[ssh://ypburgers.nomoredomainswork.ru/](SSH)] по тому же домену.
+SSH туда же.
