@@ -1,6 +1,6 @@
-describe('Тест для спринта', () => {
+describe('Тестирует закрытие модального окна с данными о заказе при клике на кнопку закрытия.', () => {
   before(function() {
-    cy.visit('http://localhost:3000/login');
+    cy.visit('login');
 
     cy.get('[data-cy="login"]').as('login');
     cy.get('[data-cy="password"]').as('password');
@@ -13,7 +13,7 @@ describe('Тест для спринта', () => {
 
   });
 
-  it('Тестирование диалога заказа', () => {
+  it('в конструктор перетаскивается один элемент нажимается кнопка оформить заказ, появляется диалоговое окно, после чего оно закрывается при клике на кнопку закрытия модального окна', () => {
     cy.get('[data-cy="item"]').first().as('someItem');
     cy.get('[data-cy="dropTarget"]').first().as('anotherItem');
     cy.get("@someItem").trigger("dragstart");

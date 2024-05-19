@@ -1,9 +1,8 @@
 import reducer from './ingredients'
+import { initialState } from './ingredients'
 
 test('Ингредиенты  начальное состояние', () => {
-  expect(reducer(undefined, { type: 'unknown' })).toEqual(
-    { ingredients: [], loading: false, loadingFailed: false }
-  )
+  expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState)
 })
 
 

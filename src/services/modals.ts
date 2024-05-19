@@ -11,7 +11,7 @@ interface IModalState {
     order?: TOrder
 };
 
-const initialState : IModalState = {
+export const initialState : IModalState = {
     orderVisible: false,
     itemVisible: false,
     orderInfoVisible: false

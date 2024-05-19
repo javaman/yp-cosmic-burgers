@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxj
 import Cookies from 'js-cookie';
 import { BASE_URL } from '../constants';
 import { checkResponse } from '../utils/networking';
-import { RootState } from './store';
+
 
 interface IAuthState {
     resetEmail: string;
@@ -22,7 +22,7 @@ interface IAuthState {
     restoreStep: string;
 };
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
 
     resetEmail: '',
 
@@ -190,7 +190,6 @@ refreshTokenMiddleware.startListening({
     effect: async (action, { getState }) => {
         const { auth } = getState() as { auth: IAuthState};
         localStorage.setItem("refresh-token", auth.refreshToken ?? '');
-        console.log(Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96}));
     }
 });
 

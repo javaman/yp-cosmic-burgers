@@ -3,7 +3,6 @@ import { SUBMIT_URL } from '../constants';
 import { showOrder } from './modals';
 import { checkResponse } from '../utils/networking';
 import { TBurgerItemWithUuid } from './burger-constructor';
-import { RootState } from './store';
 import Cookies from 'js-cookie';
 import { TOrder } from './types';
 
@@ -14,7 +13,7 @@ interface IOrderState {
     order?: TOrder;
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
     orderNumber: -1,
     loading: false,
     loadingFailed: false

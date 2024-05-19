@@ -32,7 +32,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "cypress": "cypress open cache clear"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +58,7 @@
     "@types/uuid": "^9.0.8",
     "cypress": "^13.9.0",
     "cypress-xpath": "^2.0.1",
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.1.1",
+    "jest-fetch-mock": "^3.0.3"
   }
 }

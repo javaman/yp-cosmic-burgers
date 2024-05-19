@@ -1,9 +1,9 @@
-describe('Тест для спринта', () => {
+describe('Тестирование открытия модального окна с описанием ингредиента', () => {
   before(function() {
-    cy.visit('http://localhost:3000');
+    cy.visit('');
   });
 
-  it('Тестирование перетаскивания', () => {
+  it('после клика на ингредиенте открывает модальное окно', () => {
     cy.get('[data-cy="item"]').first().as('someItem');
     cy.get("@someItem").click();
 

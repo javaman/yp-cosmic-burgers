@@ -11,8 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 
-
-export const store = configureStore({
+export const setupStore = () => configureStore({
     reducer: {
         ingredients: ingredientsSlice,
         burgerConstructor: burgerConstructorSlice,
@@ -25,6 +24,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(refreshTokenMiddleware.middleware).prepend(wsSockedMiddleware.middleware)
 });
 
+export const store = setupStore();
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

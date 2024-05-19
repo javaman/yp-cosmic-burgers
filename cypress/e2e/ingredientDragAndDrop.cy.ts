@@ -1,9 +1,9 @@
-describe('Тест для спринта', () => {
+describe('Тестирует перетаскивание ингредиента в конструктор', () => {
   before(function() {
-    cy.visit('http://localhost:3000');
+    cy.visit('');
   });
 
-  it('Тестирование перетаскивания', () => {
+  it('после Drag ингредиента и Drop в область конструктора он появляется там', () => {
     cy.get('[data-cy="item"]').first().as('someItem');
     cy.get('[data-cy="dropTarget"]').first().as('anotherItem');
     cy.get("@someItem").trigger("dragstart");

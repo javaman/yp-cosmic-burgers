@@ -1,9 +1,8 @@
 import reducer from './order'
+import { initialState } from './order'
 
 test('Заказ начальное состояние', () => {
-  expect(reducer(undefined, { type: 'unknown' })).toEqual(
-    { loading: false, loadingFailed: false, orderNumber: -1 }
-  )
+  expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState)
 })
 
 

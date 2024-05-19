@@ -9,7 +9,7 @@ interface IConstructorState {
     items: (TBurgerItem  & {uuid : string})[];
 };
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
     items: []
 };
 
