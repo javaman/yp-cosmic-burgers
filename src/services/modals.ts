@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import TBurgerItem from '../types/burger-types';
-import { RootState } from './store';
 import { TOrder } from './types';
 
 interface IModalState {

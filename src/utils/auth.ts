@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie';
 
 export function isAuthenticated() {
-    return !!localStorage.getItem("refresh-token") && !!Cookies.get('access-token');
+    const result = !!localStorage.getItem("refresh-token") && !!Cookies.get('access-token');
+    console.log(result);
+    return result;
 }
