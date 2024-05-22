@@ -13,8 +13,8 @@ const Modal = ({ children, closeModal, title }: React.PropsWithChildren<TModalPr
     if (portal) {
         return createPortal(
             <>
-                <div className={styles.modal}>
-                    <div><span className="text text_type_main-medium">{title}</span><button onClick={closeModal} className={styles.closeButton}>X</button></div>
+                <div className={styles.modal} data-cy="modal">
+                    <div><span className="text text_type_main-medium">{title}</span><button onClick={closeModal} className={styles.closeButton} data-cy="close-modal">X</button></div>
                     {children}
                 </div>
                 <ModalOverlay closeModal={closeModal} />

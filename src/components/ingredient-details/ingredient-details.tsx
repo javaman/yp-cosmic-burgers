@@ -30,8 +30,8 @@ const IngredientDetails = ({ingredient, id} : {ingredient?: TBurgerItem, id?: st
 
     return (
         <div>
-            <div className={styles.row + "m-4"}><img src={i.image_large} className={styles.img}/></div>
-            <div className={styles.row + " m-4 text text_type_main-medium"}>{i.name}</div>
+            <div className={styles.row + "m-4"}><img src={i.image_large} className={styles.img} data-cy="details-icon"/></div>
+            <div className={styles.row + " m-4 text text_type_main-medium"}  data-cy="details-name">{i.name}</div>
             <div className={styles.row}>
                 <NutritionFact name="Калории, ккал" number={i.calories} />
                 <NutritionFact name="Белки, г" number={i.proteins} />

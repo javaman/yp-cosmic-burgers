@@ -38,12 +38,12 @@ const Login = ({extraClass} : {extraClass : string}) => {
             <form onSubmit={submit}>
                 <div className={`${styles.center} text text_type_main-medium mb-8`}>Вход</div>
                 <div className="m-4">
-                    <Input type="email" name="email" placeholder={loginEmail ? "" : "E-mail"} value={loginEmail} onChange={e => dispatch(setLoginEmail(e.target.value))} />
+                    <Input type="email" name="email" placeholder={loginEmail ? "" : "E-mail"} value={loginEmail} onChange={e => dispatch(setLoginEmail(e.target.value))} data-cy="login"/>
                 </div>
                 <div className="m-4">
-                    <Input type="password"  name="password" icon="ShowIcon" placeholder={ loginPassword ? "" : "Пароль"} value={loginPassword} onChange={e => dispatch(setLoginPassword(e.target.value))} />
+                    <Input type="password"  name="password" icon="ShowIcon" placeholder={ loginPassword ? "" : "Пароль"} value={loginPassword} onChange={e => dispatch(setLoginPassword(e.target.value))} data-cy="password"/>
                 </div>
-                <div className={`${styles.center} mt-8 mb-15`}>
+                <div className={`${styles.center} mt-8 mb-15`} data-cy="submit-wrapper" >
                     <Button htmlType="submit" type="primary" size="medium">Войти</Button>
                 </div>
                 <div className={`${styles.center} pt-15 text text_type_main-small`}><span>Вы - новый пользователь?</span>&nbsp;<Link to="/register">Зарегистрироваться</Link> </div>

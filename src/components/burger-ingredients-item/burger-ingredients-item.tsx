@@ -31,7 +31,7 @@ const BurgerIngredientsItem = ({item} : TBurgerIngredientsItemParams) => {
     let result = (<></>);
     if (!isDrag) {
         result = (
-            <div ref={dragRef} className={`${styles.relative} mb-8`}>
+            <div ref={dragRef} className={`${styles.relative} mb-8`} data-cy="item">
                 <div className={styles.imgWrap}>
                     <img src={item.image} />
                 </div>

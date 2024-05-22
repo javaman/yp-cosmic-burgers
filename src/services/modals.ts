@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import TBurgerItem from '../types/burger-types';
-import { RootState } from './store';
 import { TOrder } from './types';
 
 interface IModalState {
@@ -11,7 +10,7 @@ interface IModalState {
     order?: TOrder
 };
 
-const initialState : IModalState = {
+export const initialState : IModalState = {
     orderVisible: false,
     itemVisible: false,
     orderInfoVisible: false

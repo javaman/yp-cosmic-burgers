@@ -60,7 +60,7 @@ interface IFeedState {
     error?: Event;
 }
 
-const initialState: IFeedState = {
+export const initialState: IFeedState = {
     wsConnected: false,
     orders: [],
     total: 0,

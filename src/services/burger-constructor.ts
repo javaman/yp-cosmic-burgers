@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import TBurgerItem from '../types/burger-types';
-import { RootState } from './store';
 
 export type TBurgerItemWithUuid = TBurgerItem & {uuid : string};
 
@@ -9,7 +8,7 @@ interface IConstructorState {
     items: (TBurgerItem  & {uuid : string})[];
 };
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
     items: []
 };
 

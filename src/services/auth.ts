@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createListenerMiddleware } from '@reduxj
 import Cookies from 'js-cookie';
 import { BASE_URL } from '../constants';
 import { checkResponse } from '../utils/networking';
-import { RootState } from './store';
+
 
 interface IAuthState {
     resetEmail: string;
@@ -11,7 +11,7 @@ interface IAuthState {
     registerLogin: string;
     registerEmail: string;
     registerPassword: string;
-    accessToken?: string;
+    accessToken: string | null;
     refreshToken: string | null;
     loginEmail: string;
     loginPassword: string;
@@ -22,7 +22,7 @@ interface IAuthState {
     restoreStep: string;
 };
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
 
     resetEmail: '',
 
@@ -33,7 +33,7 @@ const initialState: IAuthState = {
     registerEmail: '',
     registerPassword: '',
 
-    accessToken: Cookies.get('access-token'),
+    accessToken: Cookies.get('access-token') || null,
     refreshToken: localStorage.getItem("refresh-token"),
 
     loginEmail: '',
@@ -58,7 +58,7 @@ export const requestResetToken = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: auth.email
+                email: auth.resetEmail
             })        
         }).then(checkResponse);
         return res;
@@ -190,7 +190,7 @@ refreshTokenMiddleware.startListening({
     effect: async (action, { getState }) => {
         const { auth } = getState() as { auth: IAuthState};
         localStorage.setItem("refresh-token", auth.refreshToken ?? '');
-        console.log(Cookies.set('access-token', auth.accessToken ?? '', {expires: 1/96}));
+        Cookies.set("access-token", auth.accessToken ?? '');
     }
 });
 
@@ -237,7 +237,6 @@ const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-
         builder.addCase(requestResetToken.fulfilled, (state, action) => {
             state.resetEmail = '';
         });

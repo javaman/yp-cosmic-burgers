@@ -44,12 +44,12 @@ const BurgerConstructorItem = ({index} : {index: number}) => {
     let result = (<></>);
 
     if (index === -1 && bun !== undefined) {
-        result =(<li><ConstructorElement extraClass='m-1' thumbnail={bun.image_mobile} text={bun.name + ' верх'} price={bun.price} type='top' isLocked/></li>);
+        result =(<li  data-cy="droppedItem"><ConstructorElement extraClass='m-1' thumbnail={bun.image_mobile} text={bun.name + ' верх'} price={bun.price} type='top' isLocked/></li>);
     } else if (index === Number.MAX_SAFE_INTEGER && bun !== undefined) {
-        result = (<li><ConstructorElement  extraClass='m-1' thumbnail={bun.image_mobile} text={bun.name + ' низ'} price={bun.price} type='bottom' isLocked /></li>);
+        result = (<li  data-cy="droppedItem"><ConstructorElement  extraClass='m-1' thumbnail={bun.image_mobile} text={bun.name + ' низ'} price={bun.price} type='bottom' isLocked /></li>);
     } else if (index > -1 && index < Number.MAX_SAFE_INTEGER) {
         result = (
-            <li ref={dragRef} style={extraStyle}>
+            <li ref={dragRef} style={extraStyle}  data-cy="droppedItem">
                 <div ref={dropTarget} style={extraOverStyle}>
                     <ConstructorElement
                         extraClass='m-1' 

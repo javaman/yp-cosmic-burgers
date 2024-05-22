@@ -10,7 +10,7 @@ interface IIngredientsState {
     loadingFailed: boolean;   
 };
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
     ingredients: [],
     loading: false,
     loadingFailed: false
